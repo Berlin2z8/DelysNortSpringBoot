@@ -10,3 +10,18 @@ logoLink.addEventListener('mouseover', function () {
 logoLink.addEventListener('mouseout', function () {
     logo.style.transform = 'scale(1)'; // En esta parte regresa el logo a su tamaño original al quitar el mouse del enlace
 });
+
+    function eliminarProducto(index) {
+        fetch(`/carrito/eliminar/${index}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                // Recargar el modal o la página para reflejar los cambios
+                location.reload();
+            } else {
+                alert('Error al eliminar el producto.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
