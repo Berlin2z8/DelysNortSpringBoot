@@ -1,0 +1,482 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.navegaciones {
+  position: relative;
+  height: 80px;
+  /* Gradiente multicolor llamativo sin líneas */
+  background: linear-gradient(
+    45deg, 
+    #FF6B6B,  /* Rojo coral */
+    #4ECDC4,  /* Turquesa */
+    #45B7D1,  /* Azul cielo */
+    #96C93D,  /* Verde lima */
+    #FED766   /* Amarillo dorado */
+  );
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, 
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+/* Animación del gradiente */
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Mantenemos el patrón de líneas pero con más transparencia */
+.navegaciones::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.1) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  pointer-events: none;
+}
+
+.navegaciones ul {
+  float: right;
+  margin-right: 20px;
+}
+
+.navegaciones ul li {
+  display: inline-block;
+  line-height: 80px;
+  margin: 0 8px;
+}
+
+.navegaciones ul li a {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Efecto hover moderno */
+.navegaciones ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #e2c20e;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navegaciones ul li a:hover {
+  color: white;
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navegaciones ul li a:hover::after {
+  width: 80%;
+}
+
+/* Estilo especial para el botón de contacto */
+ul li a.contact {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+ul li a.contact:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Mejora para el menú móvil */
+@media (max-width: 858px) {
+  .checkbtn {
+    color: #ffffff;
+  }
+
+  .navegaciones ul {
+    background: linear-gradient(135deg, #2b1810 0%, #4a2511 100%);
+    backdrop-filter: blur(10px);
+  }
+
+  .navegaciones ul li {
+    margin: 25px 0;
+  }
+
+  .navegaciones ul li a {
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .navegaciones ul li a:hover {
+    background: rgba(226, 194, 14, 0.15);
+    padding-left: 25px;
+  }
+
+  ul li a.contact {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+  }
+}
+
+ul li a.contact:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+a.contact {
+  color: white;
+  font-weight: 500;
+}
+
+.checkbtn {
+  font-size: 30px;
+  color: rgb(0, 0, 0);
+  float: right;
+  line-height: 80px;
+  margin-right: 40px;
+  cursor: pointer;
+  display: none;
+}
+
+#check {
+  display: none;
+}
+
+@media (max-width: 952px) {
+  .enlace {
+    padding-left: 20px;
+  }
+  .navegaciones ul li a {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 842px) {
+  .logo {
+    height: 27px;
+  }
+}
+
+@media (max-width: 858px) {
+  .checkbtn {
+    display: block;
+  }
+  ul {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(168, 87, 10);
+    top: 80px;
+    left: -100%;
+    text-align: center;
+    transition: all 0.5s;
+  }
+  .navegaciones ul li {
+    display: block;
+    margin: 20px 0;
+    line-height: 30px;
+  }
+  .navegaciones ul li a {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  li a:hover,
+  li a.active {
+    background: none;
+    color: black;
+  }
+  #check:checked ~ ul {
+    left: 0;
+  }
+}
+
+/*** FIN NAV DE LOGO Y MENU **/
+
+    /* Estilos para la sección de productos */
+    .productos {
+        padding: 4rem 0;
+        background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    }
+
+    .productos h2 {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .productos h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(to right, #ff6b6b, #ffd93d);
+        border-radius: 2px;
+    }
+
+    .card {
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-text {
+        color: #666;
+        margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(to right, #00f2fe, #4facfe);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(79,172,254,0.4);
+    }
+
+    /* Estilos para el modal */
+    .modal-content {
+        border-radius: 15px;
+        border: none;
+    }
+
+    .modal-header {
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        color: white;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .modal-title {
+        font-weight: 600;
+    }
+
+    .modal-body img {
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .btn-success {
+        background: linear-gradient(to right, #00b09b, #96c93d);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(to right, #96c93d, #00b09b);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,176,155,0.4);
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+    }
+    /* Agregamos estilos específicos para el grid */
+    .productos .row {
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 1400px;
+    }
+
+    .productos .col {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    /* Aseguramos que las imágenes tengan la misma altura */
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* Ajustamos el espaciado interno del contenedor principal */
+    .productos.container {
+        padding: 2rem 15px;
+    }
+
+/*inicio apartado de footer*/
+.footer {
+  padding: 70px 0;
+}
+
+.footer-col {
+  width: 25%;
+  padding: 0 15px;
+}
+
+.footer-col p {
+  font-size: 12px;
+  color: #000;
+  font-weight: 500;
+  position: relative;
+}
+
+.footer-col span {
+  font-size: 12px;
+  color: #000;
+  transform: capitalize;
+  font-weight: 500;
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.footer-col .menus {
+  font-size: 13px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  color: #000;
+  display: block;
+  transition: all 0.3 ease;
+}
+
+.footer-col .sociales a {
+  display: flex;
+  color: rgb(0, 0, 0);
+  background-color: rgba(150, 149, 149, 0.313);
+  height: 38px;
+  width: 38px;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 50%;
+  margin: 5px 11px;
+  transition: 0.4s;
+  text-transform: capitalize;
+}
+
+.footer-col .sociales a:hover {
+  transform: scale(1.2);
+}
+
+.footer-col .menus:hover {
+  color: #013f62;
+  padding-left: 8px;
+}
+
+@media (max-width: 767px) {
+  .footer-col {
+    width: 50%;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .sociales {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 574px) {
+  .footer-col {
+    width: 100%;
+  }
+  .footer-col .menus {
+    font-size: 12px;
+  }
+  .footer-col p {
+    font-size: 10px;
+  }
+}
+
+body {
+  --sb-track-color: #3a3a30;
+  --sb-thumb-color: #c5a207;
+  --sb-size: 14px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+}
+
