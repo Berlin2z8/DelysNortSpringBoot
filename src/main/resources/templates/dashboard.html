@@ -7,22 +7,39 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" th:href="@{/images/delys/logodelysnort.jpg}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+    <style>
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Ligeramente más suave */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .productos {
+            padding: 50px 0;
+        }
+    </style>
 </head>
 <body>
+<!-- Fragmento del navbar -->
 <div class="sticky-top container-fluid p-0 m-0">
     <nav class="navegaciones">
         <input type="checkbox" id="check">
         <label for="check" class="checkbtn">
             <i class="bi bi-list" style="background-color: white; border-radius: 10px;"></i>
         </label>
-        <a href="#" th:href="@{/admin}" class="enlace">
-            <img src="assets/img/torito-grill.webp" alt="Logo" class="logo">
+        <a th:href="@{/cliente}" class="enlace">
+            <img th:src="@{/images/delys/logonavbar.png}" alt="Logo" class="logo">
         </a>
         <ul>
-            <li><a class="active" href="#dashboard" style="font-size: 13px;"><b>DASHBOARD</b></a></li>
-            <li><a href="#productos" style="font-size: 13px;"><b>PRODUCTOS</b></a></li>
+            <li><a class="active" href="@{/cliente}" style="font-size: 13px;"><b>DASHBOARD</b></a></li>
+            <li><a href="@{/cliente}#productos" style="font-size: 13px;"><b>PRODUCTOS</b></a></li>
+            <li><a th:href="@{/cliente/nosotros}" style="font-size: 13px;"><b>NOSOTROS</b></a></li>
             <li><a th:href="@{/admin/ventas}" style="font-size: 13px;"><b>VENTAS</b></a></li>
             <li>
                 <a href="#" style="font-size: 13px;" data-bs-toggle="modal" data-bs-target="#carritoModal">
@@ -69,30 +86,9 @@
     </div>
 </div>
 
+
 <!-- Encabezado de Bienvenida -->
 <h1 id="dashboard" class="text-center mt-5" th:text="'Bienvenido, ' + ${#authentication.name}"></h1>
-
-
-<body>
-    <!-- Agregamos la sección de bienvenida antes del contenedor de login -->
-    <div class="welcome-section">
-        <div class="welcome-container">
-            <div class="welcome-text">
-                <h1>DeslySnackNorth</h1>
-                <p>¡Bienvenido a tu destino favorito de snacks y bebidas! En DeslySnackNorth nos especializamos en ofrecer 
-                   la mejor selección de productos para satisfacer tus antojos. Nuestra pasión es brindarte calidad y 
-                   servicio excepcional en cada visita.</p>
-                <p>Gestiona tu inventario, realiza pedidos y mantén el control de tu negocio de manera eficiente 
-                   con nuestro sistema especializado.</p>
-            </div>
-            <div class="welcome-image">
-                <img src="ruta/a/tu/imagen.jpg" alt="Marx agregas aca una Imagen">
-            </div>
-        </div>
-    </div>
-
-    <div class="login-container">
-
 <!-- Sección de Productos -->
 <div id="productos" class="container productos">
     <h2 class="text-center mb-4">Productos Disponibles</h2>
@@ -145,42 +141,9 @@
         </th:block>
     </div>
 </div>
-<!-- Sección de Ofertas -->
-<div class="container ofertas mt-5">
-    <h2 class="text-center mb-4">Ofertas Especiales</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <img src="assets/img/oferta1.jpg" class="card-img-top" alt="Oferta 1">
-                <div class="card-body">
-                    <h5 class="card-title">Descuento del 20%</h5>
-                    <p class="card-text">En todos los productos de la categoría Snacks.</p>
-                    <a href="#" class="btn btn-primary">Ver Más</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="assets/img/oferta2.jpg" class="card-img-top" alt="Oferta 2">
-                <div class="card-body">
-                    <h5 class="card-title">Combo Familiar</h5>
-                    <p class="card-text">Llévate 3 productos por el precio de 2.</p>
-                    <a href="#" class="btn btn-primary">Ver Más</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="assets/img/oferta3.jpg" class="card-img-top" alt="Oferta 3">
-                <div class="card-body">
-                    <h5 class="card-title">Envío Gratis</h5>
-                    <p class="card-text">En compras mayores a S/ 50.</p>
-                    <a href="#" class="btn btn-primary">Ver Más</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+<!-- Contenedor para la Sección de Ofertas -->
+<div id="ofertas-section"></div>
 
 <!-- Sección de Redes Sociales -->
 <div class="container mt-5">
@@ -204,14 +167,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62427.16621388307!2d-77.11319485136723!3d-12.064295500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8ea5ddc2917%3A0x308a5998a681e2ba!2sUniversidad%20Tecnol%C3%B3gica%20del%20Per%C3%BA!5e0!3m2!1ses-419!2spe!4v1730390244596!5m2!1ses-419!2spe" 
-                    width="100%" 
-                    height="400" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62427.16621388307!2d-77.11319485136723!3d-12.064295500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8ea5ddc2917%3A0x308a5998a681e2ba!2sUniversidad%20Tecnol%C3%B3gica%20del%20Per%C3%BA!5e0!3m2!1ses-419!2spe!4v1730390244596!5m2!1ses-419!2spe"
+                        width="100%"
+                        height="400"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
         </div>
@@ -219,13 +182,45 @@
 </div>
 
 <br><br>
+<style>
+    .footer-tipo {
+        background-color: rgb(139, 69, 19);
+        /* Marrón estilo carne a la parrilla */
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+            rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        position: relative;
+        overflow: hidden;
+        color: white;
+    }
 
+    .footer-tipo::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(45deg,
+                rgba(0, 0, 0, 0.2),
+                rgba(0, 0, 0, 0.2) 10px,
+                transparent 10px,
+                transparent 20px);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .footer-tipo .container {
+        position: relative;
+        z-index: 2;
+    }
+</style>
 <footer class="footer-tipo">
     <div class="container">
         <div class="row">
             <div class="footer-col col-sm-6 col-lg-3">
                 <br>
-                <img src="assets/img/torito-grill.webp" width="200" alt="Logo empresa"><br><br>
+                <img th:src="@{/images/delys/logonavbar.png}" width="200" alt="Logo empresa"><br><br>
                 <span style="font-size: 13px; color:white;"><b>Medios de pagos</b></span>
                 <p style="font-size: 13px; color:white;">Aceptamos todos los medios de pago</p>
             </div>
@@ -243,11 +238,11 @@
                 <br>
                 <span style="font-size: 13px; color:white;">HORARIO DE ATENCION</span>
 
-                <p style="font-size: 13px; color:white;"><b>Local 1:</b> Lunes a Viernes de 06:00pm a 11:00pm</p>
+                <p style="font-size: 13px; color:white;"><b>Local 1:</b> Lunes a Vierens de 06:00pm a 11:00pm</p>
 
                 <p style="font-size: 13px; color:white;"><b>Local 2:</b> Lunes a Viernes de 12:00pm a 11:00pm</p>
 
-                <p style="font-size: 13px; color:white;">Sábados, Domingos y Feriados de 12:00pm a 11:00pm en ambos
+                <p style="font-size: 13px; color:white;">Sábados, Domigos y Feriados de 12:00pm a 11:00pm en ambos
                     locales</p>
 
                 <p style="font-size: 13px; color:white;"><b>Números de contacto</b><br>
@@ -285,9 +280,10 @@
         <p>©2024 Creador Marx Chipana. All right reserved.</p>
     </div>
 </div>
-<script type="javascript" th:src="@{/js/script.js}"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/seccionofertas.js}"></script>
+<script th:src="@{/js/eliminarCarrito.js}"></script>
 </body>
 </html>

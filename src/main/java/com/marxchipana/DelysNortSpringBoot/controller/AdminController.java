@@ -1,15 +1,14 @@
 package com.marxchipana.DelysNortSpringBoot.controller;
 
+import com.marxchipana.DelysNortSpringBoot.DAO.VentaRepository;
 import com.marxchipana.DelysNortSpringBoot.models.Producto;
 import com.marxchipana.DelysNortSpringBoot.models.Rol;
 import com.marxchipana.DelysNortSpringBoot.models.Usuario;
+import com.marxchipana.DelysNortSpringBoot.models.Venta;
 import com.marxchipana.DelysNortSpringBoot.repository.RepositoryProducto;
 import com.marxchipana.DelysNortSpringBoot.repository.RepositoryRol;
 import com.marxchipana.DelysNortSpringBoot.repository.RepositoryUsuario;
-import com.marxchipana.DelysNortSpringBoot.services.ExcelGeneratorProductosService;
-import com.marxchipana.DelysNortSpringBoot.services.ExcelGeneratorService;
-import com.marxchipana.DelysNortSpringBoot.services.PDFGeneratorProductosService;
-import com.marxchipana.DelysNortSpringBoot.services.PDFGeneratorService;
+import com.marxchipana.DelysNortSpringBoot.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,8 @@ public class AdminController {
     private RepositoryRol rolRepository;
     @Autowired
     private RepositoryProducto productoRepository;
+    @Autowired
+    private VentaRepository ventaRepository;
     @GetMapping("/admin")
     public String adminPage(Model model) {
         List<Usuario> usuarios = usuarioRepository.findAll();
@@ -217,6 +218,40 @@ public class AdminController {
     public String eliminarUsuario(@PathVariable Integer id) {
         usuarioRepository.deleteById(id);
         return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/ventas")
+    public String ventas(Model model) {
+        List<Venta> venta = ventaRepository.findAll(); // Obtén todos las ventas
+        model.addAttribute("ventas", venta); // Agrega la lista al modelo
+        return "adminVentas"; // Nombre de la vista que va a retornar, que es adminVentas.html
+    }
+
+    @PostMapping("/admin/ventas/editar")
+    public String editarVenta(@ModelAttribute Venta venta) {
+        ventaRepository.save(venta);  // Guardar los cambios
+        return "redirect:/admin/ventas";
+    }
+
+    @GetMapping("/admin/ventas/eliminar/{id}")
+    public String eliminarVenta(@PathVariable Integer id) {
+        ventaRepository.deleteById(id);
+        return "redirect:/admin/ventas";
+    }
+    @Autowired
+    private PDFGeneratorVentasService pdfGeneratorVentasService;
+    @GetMapping("/admin/ventas/pdf")
+    public ResponseEntity<InputStreamResource> downloadSalesReport() {
+        List<Venta> ventas = ventaRepository.findAll();
+        ByteArrayInputStream pdfStream = pdfGeneratorVentasService.generateSalesReport(ventas);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=ventas_reporte.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(pdfStream));
     }
 
     @GetMapping("/admin/logout")

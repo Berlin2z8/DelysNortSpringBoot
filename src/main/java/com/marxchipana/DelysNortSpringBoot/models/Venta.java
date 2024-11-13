@@ -3,8 +3,8 @@ package com.marxchipana.DelysNortSpringBoot.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -17,18 +17,20 @@ public class Venta {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id")
-    private Producto producto;
-
-    @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    private int cantidad;
-    private BigDecimal total;
+    private String nombre;
+    private String email;
     private String celular;
+    private int cantidad; // Puedes mantener esta propiedad si la necesitas
+    private BigDecimal total;
+
+    @Column(name = "nombre_producto")
+    private String nombresProductos;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+
 }
 

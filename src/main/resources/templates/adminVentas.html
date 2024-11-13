@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Ventas</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" th:href="@{/images/delys/logodelysnort.jpg}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="sticky-top container-fluid p-0 m-0">
+    <nav class="navegaciones">
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="bi bi-list" style="background-color: white; border-radius: 10px;"></i>
+        </label>
+        <a href="#" th:href="@{/admin}" class="enlace">
+            <img th:src="@{/images/delys/logonavbar.jpg}" alt="" class="logo">
+        </a>
+        <ul>
+            <li><a class="active" th:href="@{/admin}" style="font-size: 13px;"><b>DASHBOARD</b></a></li>
+            <li><a th:href="@{/admin/productos}" style="font-size: 13px;"><b>PRODUCTOS</b></a></li>
+            <li><a th:href="@{/admin/ventas}" style="font-size: 13px;"><b>VENTAS</b></a></li>
+            <li><a style="font-size: 13px;" th:href="@{/logout}">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Lista de Productos</h1>
+    <div class="text-center mt-4">
+        <a href="/admin/ventas/pdf" class="btn btn-primary" target="_blank">
+            Descargar Reporte PDF
+        </a>
+        <br><br>
+        <a href="/admin/ventas/excel" class="btn btn-success" target="_blank">
+            Descargar Reporte Excel
+        </a>
+    </div>
+    <!-- Botón para abrir el modal -->
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">
+        Agregar Producto
+    </button>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre del Cliente</th>
+            <th>Email</th>
+            <th>Celular</th>
+            <th>Productos</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Fecha de Venta</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterar sobre cada venta -->
+        <tr th:each="venta : ${ventas}">
+            <td th:text="${venta.id}"></td>
+            <td th:text="${venta.nombre}"></td>
+            <td th:text="${venta.email}"></td>
+            <td th:text="${venta.celular}"></td>
+            <td th:text="${venta.nombresProductos}"></td>
+            <td th:text="${venta.cantidad}"></td>
+            <td th:text="${venta.total}"></td>
+            <td th:text="${#dates.format(venta.fecha, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td>
+                <button class="btn btn-warning btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editVentaModal"
+                        th:attr="data-id=${venta.id},
+                                 data-nombre=${venta.nombre},
+                                 data-email=${venta.email},
+                                 data-celular=${venta.celular},
+                                 data-productos=${venta.nombresProductos},
+                                 data-cantidad=${venta.cantidad},
+                                 data-total=${venta.total}">Editar</button>
+                <button class="btn btn-danger btn-sm" th:onclick="'deleteVenta(' + ${venta.id} + ')'">Eliminar</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Modal para Editar Venta -->
+    <div class="modal fade" id="editVentaModal" tabindex="-1" aria-labelledby="editVentaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editVentaModalLabel">Editar Venta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editVentaForm" method="post" th:action="@{/admin/ventas/editar}" enctype="multipart/form-data">
+                        <input type="hidden" id="edit-venta-id" name="id">
+                        <div class="mb-3">
+                            <label for="edit-venta-nombre" class="form-label">Nombre del Cliente</label>
+                            <input type="text" class="form-control" id="edit-venta-nombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-venta-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="edit-venta-email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-venta-celular" class="form-label">Celular</label>
+                            <input type="text" class="form-control" id="edit-venta-celular" name="celular" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-venta-productos" class="form-label">Productos</label>
+                            <input type="text" class="form-control" id="edit-venta-productos" name="nombresProductos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-venta-cantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="edit-venta-cantidad" name="cantidad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-venta-total" class="form-label">Total</label>
+                            <input type="number" class="form-control" id="edit-venta-total" name="total" step="0.01" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/admin/adminVentas.js}"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

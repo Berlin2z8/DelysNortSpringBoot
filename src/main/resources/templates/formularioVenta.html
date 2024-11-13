@@ -24,60 +24,41 @@
   </style>
 </head>
 <body>
-<!-- Modal de carrito -->
-<div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-group" th:if="${carrito.size() > 0}">
-          <li class="list-group-item" th:each="item : ${carrito}">
-            <div class="d-flex justify-content-between">
-              <span th:text="${item.producto.nombre}"></span>
-              <span>Cantidad: <span th:text="${item.cantidad}"></span></span>
-            </div>
-            <p class="mb-1">Precio: S/ <span th:text="${item.producto.precio}"></span></p>
-          </li>
-        </ul>
-        <p th:if="${carrito.size() == 0}" class="text-center">No hay productos en el carrito.</p>
-      </div>
-      <div class="modal-footer">
-        <h5>Total: S/ <span th:text="${totalCarrito}"></span></h5>
-        <button type="button" class="btn btn-primary">Comprar</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <!-- Encabezado de Bienvenida -->
 <h1 id="dashboard" class="text-center mt-5" th:text="'Bienvenido, ' + ${#authentication.name}"></h1>
 <h2>Formulario de Venta</h2>
+<form th:action="@{/guardar}" th:object="${venta}" method="post" onsubmit="return beforeSubmit();">
+    <label>Nombre:</label>
+    <input type="text" th:value="${usuario.nombre}" readonly /><br/>
 
-<form th:action="@{/guardar}" th:object="${venta}" method="post">
-  <label>Nombre:</label>
-  <input type="text" th:field="*{usuario.nombre}" readonly /><br/>
+    <label>Email:</label>
+    <input type="email" th:value="${usuario.email}" readonly /><br/>
 
-  <label>Email:</label>
-  <input type="email" th:field="*{usuario.email}" readonly /><br/>
+    <label>Número de Celular:</label>
+    <input type="text" th:field="*{celular}" required /><br/>
 
-  <label>Número de Celular:</label>
-  <input type="text" th:field="*{numeroCelular}" required /><br/>
+    <h3>Productos a Comprar</h3>
+    <ul id="productos-list">
+        <li th:each="producto : ${productos}">
+            <span th:text="${producto.nombre}">Nombre del Producto</span> -
+            <span th:text="${producto.precio}" data-precio="${producto.precio}">Precio</span>
+            <label>Cantidad:</label>
+            <input type="number" th:field="*{cantidad}" required min="1" onchange="calcularTotal()" />
+            <input type="hidden" class="precio-producto" th:value="${producto.precio}" /> <!-- Campo oculto para el precio -->
+            <br/>
+        </li>
+    </ul>
 
-  <h3>Productos a Comprar</h3>
-  <ul>
-    <li th:each="producto : ${productos}">
-      <span th:text="${producto.nombre}">Nombre del Producto</span> -
-      <span th:text="${producto.precio}">Precio</span><br/>
-    </li>
-  </ul>
+    <h4>Total: <span id="total" th:text="${venta.total}">0</span></h4>
+    <input type="hidden" id="totalHidden" th:field="*{total}" /> <!-- Hidden field for total -->
+    <input type="hidden" id="nombresProductosHidden" th:field="*{nombresProductos}" /> <!-- Hidden field for product names -->
 
-  <button type="submit">Guardar Venta</button>
+    <button type="submit">Guardar Venta</button>
 </form>
+
+<script th:src="@{/js/guardarventa.js}"></script>
+
 <br><br>
 <style>
   .footer-tipo {

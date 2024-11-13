@@ -9,7 +9,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.UnitValue;
-import com.marxchipana.DelysNortSpringBoot.models.Usuario;
+import com.marxchipana.DelysNortSpringBoot.models.Venta;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -17,30 +17,24 @@ import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 @Service
-public class PDFGeneratorService {
-
-    public ByteArrayInputStream generateUserReport(List<Usuario> usuarios) {
+public class PDFGeneratorVentasService {
+    public ByteArrayInputStream generateSalesReport(List<Venta> ventas) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
-            // Crear PdfWriter y PdfDocument a partir del OutputStream
             PdfWriter writer = new PdfWriter(out);
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            // Cargar y agregar el logo
+            // Agregar logo
             String logoPath = "src/main/resources/static/images/delys/logodelysnort.jpg";
             ImageData logoData = ImageDataFactory.create(logoPath);
-            Image logo = new Image(logoData).scaleToFit(50, 50);  // Ajusta el tamaño según lo necesites
+            Image logo = new Image(logoData).scaleToFit(50, 50);
             document.add(logo);
 
-            // Agregar título y subtítulo
-            document.add(new Paragraph("Reporte de Usuarios").setBold().setFontSize(18));
-            document.add(new Paragraph("Lista de Usuarios Registrados").setFontSize(12));
-
-            // Agregar la fecha de generación del reporte
+            // Título y fecha de reporte
+            document.add(new Paragraph("Reporte de Ventas").setBold().setFontSize(18));
             String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             document.add(new Paragraph("Fecha de reporte: " + currentDate).setFontSize(10).setItalic());
 
@@ -53,41 +47,46 @@ public class PDFGeneratorService {
             document.add(new Paragraph("A nivel externo, el mercado de snacks saludables está en constante crecimiento tanto a nivel local como internacional, lo que abre puertas para que nuestros productos lleguen a nuevas regiones. Sin embargo, este entorno también es competitivo, con muchas empresas enfocándose en la alimentación saludable. Por eso, nuestra estrategia se basa en ofrecer productos auténticos y de calidad que destaquen en sabor y nutrición.\n")
                     .setFontSize(10));
 
-            // Agregar la cantidad total de usuarios registrados
-            document.add(new Paragraph("\nTotal de usuarios registrados: " + usuarios.size()).setBold().setFontSize(12));
+            // Información de contexto
+            document.add(new Paragraph("\nEste reporte presenta un resumen de las ventas realizadas.").setFontSize(10));
 
-            // Crear la tabla con columnas
-            Table table = new Table(UnitValue.createPercentArray(new float[]{1, 3, 3, 2, 3}));
+            // Total de ventas
+            document.add(new Paragraph("\nTotal de ventas: " + ventas.size()).setBold().setFontSize(12));
+
+            // Tabla de ventas
+            Table table = new Table(UnitValue.createPercentArray(new float[]{1, 3, 3, 2, 2, 2, 2, 3}));
             table.setWidth(UnitValue.createPercentValue(100));
 
             // Encabezados de la tabla
             table.addHeaderCell("ID");
-            table.addHeaderCell("Nombre");
+            table.addHeaderCell("Nombre del Cliente");
             table.addHeaderCell("Email");
-            table.addHeaderCell("Rol");
-            table.addHeaderCell("Fecha de Registro");
+            table.addHeaderCell("Celular");
+            table.addHeaderCell("Productos");
+            table.addHeaderCell("Cantidad");
+            table.addHeaderCell("Total");
+            table.addHeaderCell("Fecha de Venta");
 
-            // Llenar la tabla con datos de los usuarios
-            for (Usuario usuario : usuarios) {
-                table.addCell(String.valueOf(usuario.getId()));
-                table.addCell(usuario.getNombre());
-                table.addCell(usuario.getEmail());
-                table.addCell(usuario.getRol().getNombre());
-                table.addCell(usuario.getFechaRegistro().toString());
+            // Llenado de la tabla
+            for (Venta venta : ventas) {
+                table.addCell(String.valueOf(venta.getId()));
+                table.addCell(venta.getNombre());
+                table.addCell(venta.getEmail());
+                table.addCell(venta.getCelular());
+                table.addCell(venta.getNombresProductos());
+                table.addCell(String.valueOf(venta.getCantidad()));
+                table.addCell(String.valueOf(venta.getTotal()));
+                table.addCell(venta.getFecha().toString());
             }
 
-            // Agregar la tabla al documento
             document.add(table);
 
-            // Agregar mensaje de confidencialidad
-            document.add(new Paragraph("\n\nEste documento contiene información confidencial de Delis North Snacks. La información aquí presentada es exclusivamente para uso interno de la empresa y no debe ser compartida o distribuida sin autorización.")
-                    .setFontSize(10)
-                    .setItalic());
-            document.add(new Paragraph("La divulgación no autorizada de este documento puede estar sujeta a sanciones legales.")
-                    .setFontSize(10)
-                    .setItalic());
+            // Mensaje de confidencialidad
+            document.add(new Paragraph("\n\nEste documento contiene información confidencial de Delis North Snacks. Uso interno únicamente.")
+                    .setFontSize(10).setItalic());
+            document.add(new Paragraph("La divulgación no autorizada puede estar sujeta a sanciones legales.")
+                    .setFontSize(10).setItalic());
 
-            // Cerrar el documento
             document.close();
         } catch (Exception e) {
             e.printStackTrace();

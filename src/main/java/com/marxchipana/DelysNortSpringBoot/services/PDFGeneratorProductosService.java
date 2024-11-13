@@ -1,19 +1,20 @@
 package com.marxchipana.DelysNortSpringBoot.services;
 
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.UnitValue;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.layout.element.Image;
+import com.marxchipana.DelysNortSpringBoot.models.Producto;
+import org.springframework.stereotype.Service;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-
-import com.marxchipana.DelysNortSpringBoot.models.Producto;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PDFGeneratorProductosService {
@@ -26,6 +27,12 @@ public class PDFGeneratorProductosService {
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
 
         try (Document document = new Document(pdfDocument)) {
+            // Cargar y agregar el logo
+            String logoPath = "src/main/resources/static/images/delys/logodelysnort.jpg";
+            ImageData logoData = ImageDataFactory.create(logoPath);
+            Image logo = new Image(logoData).scaleToFit(50, 50);  // Ajusta el tamaño según lo necesites
+            document.add(logo);
+
             document.add(new Paragraph("Reporte de Productos")
                     .setBold().setFontSize(18).setMarginBottom(10));
             document.add(new Paragraph("Lista de Productos Registrados")
@@ -60,6 +67,14 @@ public class PDFGeneratorProductosService {
             }
 
             document.add(table);
+            // Agregar mensaje de confidencialidad
+            document.add(new Paragraph("\n\nEste documento contiene información confidencial de Delis North Snacks. La información aquí presentada es exclusivamente para uso interno de la empresa y no debe ser compartida o distribuida sin autorización.")
+                    .setFontSize(10)
+                    .setItalic());
+            document.add(new Paragraph("La divulgación no autorizada de este documento puede estar sujeta a sanciones legales.")
+                    .setFontSize(10)
+                    .setItalic());
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
