@@ -34,7 +34,71 @@ body {
     background-position: 0% 50%;
   }
 }
-
+/* Estilos para la parte superior */
+.top-bar {
+  background-color: #f8b400; /* Color de la barra superior */
+  padding: 10px 0; /* Espaciado */
+  text-align: center; /* Centrar texto */
+}
+.top-bar a {
+  color: white; /* Color del texto */
+  margin: 0 15px; /* Espaciado entre enlaces */
+}
+.header {
+  background-color: #f8f9fa; /* Color de fondo */
+  padding: 20px 0; /* Espaciado */
+  text-align: center; /* Centrar texto */
+}
+.header h1 {
+  color: #6f42c1; /* Color del texto */
+  font-size: 24px; /* Tamaño de fuente */
+  margin: 10px 0; /* Espaciado */
+}
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.search-container input {
+  width: 300px; /* Ancho del campo de búsqueda */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 5px; /* Bordes redondeados */
+}
+.search-container button {
+  padding: 10px; /* Espaciado interno */
+  background-color: #e74c3c; /* Color del botón de búsqueda */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  margin-left: 5px; /* Espaciado entre el campo y el botón */
+}
+.navegaciones {
+  background-color: #6f42c1; /* Color morado */
+  height: 90px; /* Altura del menú */
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+.navegaciones ul {
+  float: right;
+  margin-right: 20px;
+}
+.navegaciones ul li {
+  display: inline-block;
+  line-height: 90px; /* Alineación vertical */
+  margin: 0 8px;
+}
+.navegaciones ul li a {
+  color: white; /* Color del texto */
+  font-size: 14px; /* Tamaño de fuente */
+  text-decoration: none; /* Sin subrayado */
+  padding: 8px 15px; /* Espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+  transition: background 0.3s; /* Transición suave */
+}
+.navegaciones ul li a:hover {
+  background-color: #732d91; /* Color al pasar el mouse */
+}
 /* Mantenemos el patrón de líneas pero con más transparencia */
 .navegaciones::before {
   display: none; /* O simplemente elimina esta sección */
@@ -388,7 +452,7 @@ a.contact {
 }
 
 .btn-primary {
-  background: linear-gradient(to right, #4facfe, #00f2fe);
+  background: linear-gradient(to right, #9bc219, #9a1234);
   border: none;
   padding: 10px 20px;
   border-radius: 25px;
@@ -396,14 +460,14 @@ a.contact {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(to right, #00f2fe, #4facfe);
+  background: linear-gradient(to right, #0b1919, #0fc357);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
 }
 
 /* Estilos para el modal */
 .modal-content {
-  border-radius: 15px;
+  border-radius: 30px;
   border: none;
 }
 
@@ -453,7 +517,7 @@ a.contact {
 }
 
 .modal-header {
-  background: linear-gradient(to right, #4facfe, #00f2fe);
+  background: linear-gradient(to right, #111010cb, #e40829);
   color: white;
   border-radius: 15px 15px 0 0;
 }
@@ -777,7 +841,39 @@ body::-webkit-scrollbar-thumb {
   align-items: center;
   gap: 0.5rem;
 }
+.footer-tipo {
+  background-color: rgb(139, 69, 19);
+  /* Marrón estilo carne a la parrilla */
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
 
+.footer-tipo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer-tipo .container {
+  position: relative;
+  z-index: 2;
+}
 /* Estilos específicos para cada red social */
 .facebook .social-icon {
   color: #1877f2;

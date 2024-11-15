@@ -10,3 +10,10 @@ logoLink.addEventListener('mouseover', function () {
 logoLink.addEventListener('mouseout', function () {
     logo.style.transform = 'scale(1)'; // En esta parte regresa el logo a su tamaño original al quitar el mouse del enlace
 });
+
+
+
+
+  
+  
+  
