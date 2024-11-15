@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../static/css/styles.css" />
+  </head>
+
+  <body>
+    <footer class="footer-tipo">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col col-sm-6 col-lg-3">
+            <br />
+            <img
+              th:src="@{/images/delys/logonavbar.png}"
+              width="200"
+              alt="Logo empresa"
+            /><br /><br />
+            <span style="font-size: 13px; color: white"
+              ><b>Medios de pagos</b></span
+            >
+            <p style="font-size: 13px; color: white">
+              Aceptamos todos los medios de pago
+            </p>
+          </div>
+          <div class="footer-col col-sm-6 col-lg-3">
+            <br />
+            <a
+              class="menus"
+              href="inicio"
+              style="font-size: 16px; color: white; margin-bottom: 12px"
+              >Usuarios</a
+            >
+            <a
+              class="menus"
+              href="nosotros"
+              style="font-size: 16px; color: white; margin-bottom: 12px"
+              >Platillos</a
+            >
+            <a
+              class="menus"
+              href="servicios"
+              style="font-size: 16px; color: white; margin-bottom: 12px"
+              >Contratos</a
+            >
+            <a
+              class="menus"
+              href="locales"
+              style="font-size: 16px; color: white; margin-bottom: 12px"
+              >Alquileres</a
+            >
+            <a
+              class="menus"
+              href="logout.php"
+              style="font-size: 16px; color: white; margin-bottom: 12px"
+              >Cerrar Sesion</a
+            >
+          </div>
+          <div class="footer-col col-sm-6 col-lg-3">
+            <br />
+            <span style="font-size: 13px; color: white"
+              >HORARIO DE ATENCION</span
+            >
+
+            <p style="font-size: 13px; color: white">
+              <b>Local 1:</b> Lunes a Vierens de 06:00pm a 11:00pm
+            </p>
+
+            <p style="font-size: 13px; color: white">
+              <b>Local 2:</b> Lunes a Viernes de 12:00pm a 11:00pm
+            </p>
+
+            <p style="font-size: 13px; color: white">
+              Sábados, Domigos y Feriados de 12:00pm a 11:00pm en ambos locales
+            </p>
+
+            <p style="font-size: 13px; color: white">
+              <b>Números de contacto</b><br />
+              Whatsapp: 978 105 066 <br />
+              Fijo local 1: 01 528 9667 <br />
+              Fijo Local 2: 01 688 4174 <br />
+              Realizamos delivery
+            </p>
+          </div>
+          <div class="footer-col col-sm-6 col-lg-3">
+            <div class="sociales">
+              <br />
+              <a
+                class="social-icon"
+                style="
+                  background-color: #3c70a4;
+                  color: white;
+                  margin-bottom: 15px;
+                  border: 1px solid #fff;
+                "
+                href="https://www.facebook.com/profile.php?id=100063782141554"
+                target="_blank"
+                ><i class="bi bi-facebook"></i
+              ></a>
+              <a
+                class="social-icon"
+                style="
+                  background-color: #39d40a;
+                  color: white;
+                  margin-bottom: 15px;
+                  border: 1px solid #fff;
+                "
+                href="https://wa.link/3mxkpp"
+                target="_blank"
+                ><i class="bi bi-whatsapp"></i
+              ></a>
+              <a
+                class="social-icon"
+                style="
+                  background: radial-gradient(
+                    circle at 30% 107%,
+                    #fdf497 0%,
+                    #fdf497 5%,
+                    #fd5949 45%,
+                    #d6249f 60%,
+                    #285aeb 90%
+                  );
+                  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
+                  color: white;
+                  margin-bottom: 15px;
+                  border: 1px solid #fff;
+                "
+                href="https://www.instagram.com/toritogrillperu/"
+                target="_blank"
+                ><i class="bi bi-instagram"></i
+              ></a>
+              <a
+                class="social-icon"
+                style="
+                  background-color: #000;
+                  color: white;
+                  margin-bottom: 15px;
+                  border: 1px solid #fff;
+                "
+                href="https://www.tiktok.com/@toritogrillperu"
+                target="_blank"
+                ><i class="bi bi-tiktok"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="container-fluid">
+      <div
+        class="row justify-content-center"
+        style="text-align: center; margin-top: 10px"
+      >
+        <p>©2024 Creador Marx Chipana. All right reserved.</p>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+    <script src="../static/js/social.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script th:src="@{/js/seccionofertas.js}"></script>
+    <script th:src="@{/js/eliminarCarrito.js}"></script>
+  </body>
+</html>

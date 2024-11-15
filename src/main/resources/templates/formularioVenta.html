@@ -1,164 +1,165 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard - Cliente</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <style>
-    .card {
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
+    <meta charset="UTF-8" />
+    <title>Dashboard - Cliente</title>
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <style>
+        .card {
+          transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-    .card:hover {
-        transform: scale(1.1);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    }
+        .card:hover {
+          transform: scale(1.1);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
 
-    .productos {
-        padding: 50px 0;
-    }
-  </style>
+        .productos {
+          padding: 50px 0;
+        }
+    </style>
 </head>
+
 <body>
+<!-- Incluir el fragmento del header -->
+<div id="header-container"></div>
 
 <!-- Encabezado de Bienvenida -->
-<h1 id="dashboard" class="text-center mt-5" th:text="'Bienvenido, ' + ${#authentication.name}"></h1>
+<h1
+        id="dashboard"
+        class="text-center mt-5"
+        th:text="'Bienvenido, ' + ${#authentication.name}"
+></h1>
 <h2>Formulario de Venta</h2>
-<form th:action="@{/guardar}" th:object="${venta}" method="post" onsubmit="return beforeSubmit();">
+<form
+        th:action="@{/guardar}"
+        th:object="${venta}"
+        method="post"
+        onsubmit="return beforeSubmit();"
+>
     <label>Nombre:</label>
-    <input type="text" th:value="${usuario.nombre}" readonly /><br/>
+    <input type="text" th:value="${usuario.nombre}" readonly /><br />
 
     <label>Email:</label>
-    <input type="email" th:value="${usuario.email}" readonly /><br/>
+    <input type="email" th:value="${usuario.email}" readonly /><br />
 
     <label>Número de Celular:</label>
-    <input type="text" th:field="*{celular}" required /><br/>
+    <input type="text" th:field="*{celular}" required /><br />
 
     <h3>Productos a Comprar</h3>
     <ul id="productos-list">
         <li th:each="producto : ${productos}">
             <span th:text="${producto.nombre}">Nombre del Producto</span> -
-            <span th:text="${producto.precio}" data-precio="${producto.precio}">Precio</span>
+            <span th:text="${producto.precio}" data-precio="${producto.precio}"
+            >Precio</span
+            >
             <label>Cantidad:</label>
-            <input type="number" th:field="*{cantidad}" required min="1" onchange="calcularTotal()" />
-            <input type="hidden" class="precio-producto" th:value="${producto.precio}" /> <!-- Campo oculto para el precio -->
-            <br/>
+            <input
+                    type="number"
+                    th:field="*{cantidad}"
+                    required
+                    min="1"
+                    onchange="calcularTotal()"
+            />
+            <input
+                    type="hidden"
+                    class="precio-producto"
+                    th:value="${producto.precio}"
+            />
+            <!-- Campo oculto para el precio -->
+            <br />
         </li>
     </ul>
 
     <h4>Total: <span id="total" th:text="${venta.total}">0</span></h4>
-    <input type="hidden" id="totalHidden" th:field="*{total}" /> <!-- Hidden field for total -->
-    <input type="hidden" id="nombresProductosHidden" th:field="*{nombresProductos}" /> <!-- Hidden field for product names -->
+    <input type="hidden" id="totalHidden" th:field="*{total}" />
+    <!-- Hidden field for total -->
+    <input
+            type="hidden"
+            id="nombresProductosHidden"
+            th:field="*{nombresProductos}"
+    />
+    <!-- Hidden field for product names -->
 
     <button type="submit">Guardar Venta</button>
 </form>
 
 <script th:src="@{/js/guardarventa.js}"></script>
 
-<br><br>
+<br /><br />
 <style>
-  .footer-tipo {
+    .footer-tipo {
       background-color: rgb(139, 69, 19);
       /* Marrón estilo carne a la parrilla */
       width: 100%;
       box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-          rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+        rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
       position: relative;
       overflow: hidden;
       color: white;
-  }
+    }
 
-  .footer-tipo::before {
-      content: '';
+    .footer-tipo::before {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: repeating-linear-gradient(45deg,
-              rgba(0, 0, 0, 0.2),
-              rgba(0, 0, 0, 0.2) 10px,
-              transparent 10px,
-              transparent 20px);
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2) 10px,
+        transparent 10px,
+        transparent 20px
+      );
       pointer-events: none;
       z-index: 1;
-  }
+    }
 
-  .footer-tipo .container {
+    .footer-tipo .container {
       position: relative;
       z-index: 2;
       /* Para asegurar que el contenido esté por encima del fondo con rayas */
-  }
+    }
 </style>
-<footer class="footer-tipo">
-  <div class="container">
-    <div class="row">
-      <div class="footer-col col-sm-6 col-lg-3">
-        <br>
-        <img src="assets/img/torito-grill.webp" width="200" alt="Logo empresa"><br><br>
-        <span style="font-size: 13px; color:white;"><b>Medios de pagos</b></span>
-        <p style="font-size: 13px; color:white;">Aceptamos todos los medios de pago</p>
-      </div>
-      <div class="footer-col col-sm-6 col-lg-3">
-        <br>
-        <a class="menus" href="inicio" style="font-size: 16px; color:white; margin-bottom: 12px;">Usuarios</a>
-        <a class="menus" href="nosotros"
-           style="font-size: 16px; color:white; margin-bottom: 12px;">Platillos</a>
-        <a class="menus" href="servicios"
-           style="font-size: 16px; color:white; margin-bottom: 12px;">Contratos</a>
-        <a class="menus" href="locales" style="font-size: 16px; color:white; margin-bottom: 12px;">Alquileres</a>
-        <a class="menus" href="logout.php" style="font-size: 16px; color:white; margin-bottom: 12px;">Cerrar Sesion</a>
-      </div>
-      <div class="footer-col col-sm-6 col-lg-3">
-        <br>
-        <span style="font-size: 13px; color:white;">HORARIO DE ATENCION</span>
 
-        <p style="font-size: 13px; color:white;"><b>Local 1:</b> Lunes a Vierens de 06:00pm a 11:00pm</p>
+<div id="footer-container"></div>
+<script>
+    // Función para cargar un archivo HTML en un contenedor
+    function loadHTML(url, containerId) {
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.text();
+        })
+        .then((data) => {
+          document.getElementById(containerId).innerHTML = data;
+        })
+        .catch((error) => {
+          console.error("Error loading HTML:", error);
+        });
+    }
 
-        <p style="font-size: 13px; color:white;"><b>Local 2:</b> Lunes a Viernes de 12:00pm a 11:00pm</p>
-
-        <p style="font-size: 13px; color:white;">Sábados, Domigos y Feriados de 12:00pm a 11:00pm en ambos
-          locales</p>
-
-        <p style="font-size: 13px; color:white;"><b>Números de contacto</b><br>
-          Whatsapp: 978 105 066 <br>
-          Fijo local 1: 01 528 9667 <br>
-          Fijo Local 2: 01 688 4174 <br>
-          Realizamos delivery</p>
-      </div>
-      <div class="footer-col col-sm-6 col-lg-3">
-        <div class="sociales">
-          <br>
-          <a class="social-icon"
-             style="background-color: #3c70a4; color: white; margin-bottom: 15px; border: 1px solid #fff;"
-             href="https://www.facebook.com/profile.php?id=100063782141554" target="_blank"><i
-                  class="bi bi-facebook"></i></a>
-          <a class="social-icon"
-             style="background-color: #39d40a; color: white; margin-bottom: 15px; border: 1px solid #fff;"
-             href="https://wa.link/3mxkpp" target="_blank"><i class="bi bi-whatsapp"></i></a>
-          <a class="social-icon"
-             style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); box-shadow: 0px 3px 10px rgba(0,0,0,.25); color: white; margin-bottom: 15px; border: 1px solid #fff;"
-             href="https://www.instagram.com/toritogrillperu/" target="_blank"><i
-                  class="bi bi-instagram"></i></a>
-          <a class="social-icon"
-             style="background-color: #000; color: white; margin-bottom: 15px; border: 1px solid #fff;"
-             href="https://www.tiktok.com/@toritogrillperu" target="_blank"><i
-                  class="bi bi-tiktok"></i></a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</footer>
-<div class="container-fluid">
-  <div class="row justify-content-center" style="text-align: center; margin-top: 10px;">
-    <p>©2024 Creador Marx Chipana. All right reserved.</p>
-  </div>
-</div>
+    // Cargar el encabezado y el pie de página
+    loadHTML("header.html", "header-container");
+    loadHTML("footer.html", "footer-container");
+</script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

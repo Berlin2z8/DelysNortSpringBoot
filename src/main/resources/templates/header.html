@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Header Fragment</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+  </head>
+  <body>
+    <!-- Fragmento del encabezado -->
+    <div th:fragment="header">
+      <!-- Barra superior -->
+      <div class="top-bar">
+        <div class="left-section">
+          <a href="#">NUESTRAS REDES</a>
+          <a href="#">FACEBOOK</a>
+          <a href="#">INSTAGRAM</a>
+          <a href="#">TIKTOK</a>
+        </div>
+        <div class="center-section">
+          <span>ENVÍOS A TODO EL PERÚ</span>
+        </div>
+        <div class="right-section">
+          <span>ESCRÍBENOS AL +51 987 654 321</span>
+        </div>
+      </div>
+      <!-- Parte superior -->
+      <div class="header">
+        <div
+          class="header-content"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 20px;
+          "
+        >
+          <div style="display: flex; align-items: center">
+            <img
+              th:src="@{/images/delys/logodelysnort.jpg}"
+              alt="Logo"
+              class="logo"
+            />
+            <div
+              class="search-container"
+              style="display: flex; align-items: center; margin-left: 20px"
+            >
+              <input type="text" placeholder="BUSCAR PRODUCTO" />
+              <button type="button">Buscar</button>
+            </div>
+          </div>
+          <div
+            class="favorites-container"
+            style="
+              display: flex;
+              align-items: center;
+              margin-left: auto;
+              margin-right: 20px;
+            "
+          >
+            <span style="font-size: 20px; margin-right: 5px">❤️</span>
+            <span style="font-size: 16px; margin-right: 15px"
+              >Lo que te gusta</span
+            >
+            <span style="font-size: 20px; margin-right: 5px">⭐</span>
+            <span style="font-size: 20px; margin-right: 5px">🛒</span>
+            <span style="font-size: 20px">🎉</span>
+          </div>
+        </div>
+      </div>
+      <!-- Fragmento del navbar -->
+      <div class="sticky-top container-fluid p-0 m-0">
+        <nav
+          class="navegaciones"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; align-items: center; margin-left: 50px">
+            <div
+              style="
+                background-color: #f8f400e0;
+                padding: 10px;
+                border-radius: 5px;
+                margin-right: 20px;
+              "
+            >
+              <span style="font-size: 13px"
+                >UNA MARCA QUE RESALTA EL SABOR</span
+              >
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; margin-right: 20px">
+            <ul
+              style="
+                display: flex;
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+              "
+            >
+              <li>
+                <a class="active" href="@{/cliente}" style="font-size: 13px"
+                  ><b>DASHBOARD</b></a
+                >
+              </li>
+              <li>
+                <a href="@{/cliente}#productos" style="font-size: 13px"
+                  ><b>PRODUCTOS</b></a
+                >
+              </li>
+              <li>
+                <a th:href="@{/cliente/nosotros}" style="font-size: 13px"
+                  ><b>NOSOTROS</b></a
+                >
+              </li>
+              <li>
+                <a th:href="@{/admin/ventas}" style="font-size: 13px"
+                  ><b>VENTAS</b></a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  style="font-size: 13px"
+                  data-bs-toggle="modal"
+                  data-bs-target="#carritoModal"
+                >
+                  Carrito <i class="bi bi-cart"></i>
+                  <span class="badge bg-danger" th:text="${cantidadCarrito}"
+                    >0</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a style="font-size: 13px" th:href="@{/logout}"
+                  >Cerrar Sesión</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </body>
+</html>
