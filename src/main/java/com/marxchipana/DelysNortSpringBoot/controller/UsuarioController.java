@@ -1,6 +1,7 @@
 package com.marxchipana.DelysNortSpringBoot.controller;
 
 import com.marxchipana.DelysNortSpringBoot.DAO.CarritoRepository;
+import com.marxchipana.DelysNortSpringBoot.DAO.ContactoRepository;
 import com.marxchipana.DelysNortSpringBoot.DAO.VentaRepository;
 import com.marxchipana.DelysNortSpringBoot.models.*;
 import com.marxchipana.DelysNortSpringBoot.repository.RepositoryProducto;
@@ -32,6 +33,20 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService; // Inyección del servicio
 
+    @Autowired
+    private ContactoRepository contactoRepository;
+
+    @PostMapping("/guardarContacto")
+    public String guardarContacto(@ModelAttribute Contacto contacto, Model model) {
+        // Guardar los datos en la base de datos
+        contactoRepository.save(contacto);
+
+        // Agregar un mensaje de éxito al modelo
+        model.addAttribute("mensaje", "¡Tu solicitud fue enviada con éxito!");
+
+        // Redirigir a la página de contacto con el mensaje
+        return "redirect:/cliente";
+    }
 
     // Método con @ModelAttribute para hacer disponible la cantidad del carrito en todas las páginas
     @ModelAttribute("cantidadCarrito")
@@ -57,6 +72,8 @@ public class UsuarioController {
         model.addAttribute("carrito", carrito);
         model.addAttribute("totalCarrito", totalCarrito);
 
+        // Agregar un objeto vacío de contacto para el formulario
+        model.addAttribute("contacto", new Contacto());
         return "dashboard";
     }
 

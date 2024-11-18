@@ -265,32 +265,27 @@
     </div>
     <div class="row mt-4">
         <div class="col-md-6">
-            <form class="opinion-form">
+            <form th:action="@{/guardarContacto}" th:object="${contacto}" method="post">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre :</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre">
+                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre">
                 </div>
-                
                 <div class="mb-3">
                     <label for="email" class="form-label">Email :</label>
-                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu email">
+                    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Ingresa tu email">
                 </div>
-                
                 <div class="mb-3">
                     <label for="telefono" class="form-label">Teléfono Móvil:</label>
-                    <input type="tel" class="form-control" id="telefono" placeholder="Número Telefónico">
+                    <input type="tel" class="form-control" id="telefono" th:field="*{telefono}" placeholder="Número Telefónico">
                 </div>
-                
                 <div class="mb-3">
                     <label for="solicitud" class="form-label">Solicitud :</label>
-                    <input type="text" class="form-control" id="solicitud" placeholder="reclamo / sugerencia">
+                    <input type="text" class="form-control" id="solicitud" th:field="*{solicitud}" placeholder="Reclamo / sugerencia">
                 </div>
-                
                 <div class="mb-3">
                     <label for="descripcion" class="form-label">Descripción :</label>
-                    <textarea class="form-control" id="descripcion" rows="4" placeholder="Describe tu solicitud"></textarea>
+                    <textarea class="form-control" id="descripcion" th:field="*{descripcion}" rows="4" placeholder="Describe tu solicitud"></textarea>
                 </div>
-                
                 <button type="submit" class="btn btn-enviar">ENVIAR</button>
             </form>
         </div>
