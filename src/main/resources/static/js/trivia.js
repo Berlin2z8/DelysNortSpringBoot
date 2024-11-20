@@ -5,13 +5,13 @@
                 question: "¿Cuál es la capital de Francia?",
                 options: ["París", "Londres", "Madrid", "Berlín"],
                 answer: "París",
-                image: "https://example.com/paris.jpg"
+                image: "https://images.crazygames.com/trivia-crack/20230313103519/trivia-crack-cover?auto=format,compress&q=75&cs=strip"
             },
             {
                 question: "¿Cuál es el planeta más grande del sistema solar?",
                 options: ["Tierra", "Marte", "Júpiter", "Saturno"],
                 answer: "Júpiter",
-                image: "https://example.com/jupiter.jpg"
+                image: "https://images.crazygames.com/trivia-crack/20230313103519/trivia-crack-cover?auto=format,compress&q=75&cs=strip"
             },
             // Puedes agregar más preguntas aquí
         ];

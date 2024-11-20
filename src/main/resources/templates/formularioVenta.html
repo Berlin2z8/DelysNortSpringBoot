@@ -17,10 +17,15 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-
   </head>
 
-  <body>
+  <body
+    style="
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Orbitron', sans-serif;
+      color: #e0e0e0;
+    "
+  >
     <!-- Incluir el fragmento del header -->
     <div id="header-container"></div>
 
@@ -29,69 +34,161 @@
       id="dashboard"
       class="text-center mt-5"
       th:text="'Bienvenido, ' + ${#authentication.name}"
+      style="color: #00ffcc; text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc"
     ></h1>
-    <h2>Formulario de Venta</h2>
-    <form
-      th:action="@{/guardar}"
-      th:object="${venta}"
-      method="post"
-      onsubmit="return beforeSubmit();"
+    <h2 style="color: #ff4500; text-align: center">Formulario de Venta</h2>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+      "
     >
-      <label>Nombre:</label>
-      <input type="text" th:value="${usuario.nombre}" readonly /><br />
-
-      <label>Email:</label>
-      <input type="email" th:value="${usuario.email}" readonly /><br />
-
-      <label>Número de Celular:</label>
-      <input type="text" th:field="*{celular}" required /><br />
-
-      <h3>Productos a Comprar</h3>
-      <ul id="productos-list">
-        <li th:each="producto : ${productos}">
-          <span th:text="${producto.nombre}">Nombre del Producto</span> -
-          <span th:text="${producto.precio}" data-precio="${producto.precio}"
-            >Precio</span
-          >
-          <label>Cantidad:</label>
+      <form
+        th:action="@{/guardar}"
+        th:object="${venta}"
+        method="post"
+        onsubmit="return beforeSubmit();"
+        style="
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 0 15px #00ffcc;
+          backdrop-filter: blur(10px);
+          width: 50%;
+          max-width: 600px;
+        "
+      >
+        <div style="margin-bottom: 20px">
+          <label style="color: #00ffcc">Nombre:</label>
           <input
-            type="number"
-            th:field="*{cantidad}"
+            type="text"
+            th:value="${usuario.nombre}"
+            readonly
+            style="
+              border: 2px solid #00ffcc;
+              border-radius: 5px;
+              background: transparent;
+              color: #e0e0e0;
+              width: 100%;
+              padding: 10px;
+            "
+          /><br />
+        </div>
+
+        <div style="margin-bottom: 20px">
+          <label style="color: #00ffcc">Email:</label>
+          <input
+            type="email"
+            th:value="${usuario.email}"
+            readonly
+            style="
+              border: 2px solid #00ffcc;
+              border-radius: 5px;
+              background: transparent;
+              color: #e0e0e0;
+              width: 100%;
+              padding: 10px;
+            "
+          /><br />
+        </div>
+
+        <div style="margin-bottom: 20px">
+          <label style="color: #00ffcc">Número de Celular:</label>
+          <input
+            type="text"
+            th:field="*{celular}"
             required
-            min="1"
-            onchange="calcularTotal()"
-          />
-          <input
-            type="hidden"
-            class="precio-producto"
-            th:value="${producto.precio}"
-          />
-          <!-- Campo oculto para el precio -->
-          <br />
-        </li>
-      </ul>
+            style="
+              border: 2px solid #00ffcc;
+              border-radius: 5px;
+              background: transparent;
+              color: #e0e0e0;
+              width: 100%;
+              padding: 10px;
+            "
+          /><br />
+        </div>
 
-      <h4>Total: <span id="total" th:text="${venta.total}">0</span></h4>
-      <input type="hidden" id="totalHidden" th:field="*{total}" />
-      <!-- Hidden field for total -->
-      <input
-        type="hidden"
-        id="nombresProductosHidden"
-        th:field="*{nombresProductos}"
-      />
-      <!-- Hidden field for product names -->
+        <h3 style="color: #32cd32">Productos a Comprar</h3>
+        <ul id="productos-list" style="list-style-type: none; padding: 0">
+          <li th:each="producto : ${productos}" style="margin-bottom: 15px">
+            <span th:text="${producto.nombre}" style="color: #ff6347"
+              >Nombre del Producto</span
+            >
+            -
+            <span
+              th:text="${producto.precio}"
+              data-precio="${producto.precio}"
+              style="color: #ff6347"
+              >Precio</span
+            >
+            <label style="color: #00ffcc">Cantidad:</label>
+            <input
+              type="number"
+              th:field="*{cantidad}"
+              required
+              min="1"
+              onchange="calcularTotal()"
+              style="
+                border: 2px solid #00ffcc;
+                border-radius: 5px;
+                background: transparent;
+                color: #e0e0e0;
+                width: 60px;
+                padding: 5px;
+                margin-left: 10px;
+              "
+            />
+            <input
+              type="hidden"
+              class="precio-producto"
+              th:value="${producto.precio}"
+            />
+            <!-- Campo oculto para el precio -->
+            <br />
+          </li>
+        </ul>
 
-      <button type="submit">Guardar Venta</button>
-    </form>
+        <h4 style="color: #ff4500">
+          Total: <span id="total" th:text="${venta.total}">0</span>
+        </h4>
+        <input type="hidden" id="totalHidden" th:field="*{total}" />
+        <!-- Hidden field for total -->
+        <input
+          type="hidden"
+          id="nombresProductosHidden"
+          th:field="*{nombresProductos}"
+        />
+        <!-- Hidden field for product names -->
+
+        <button
+          type="submit"
+          style="
+            background: linear-gradient(45deg, #00ffcc, #ff4500);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00ffcc;
+            transition: transform 0.3s;
+            margin-top: 20px;
+          "
+        >
+          Guardar Venta
+        </button>
+      </form>
+    </div>
 
     <script th:src="@{/js/guardarventa.js}"></script>
 
     <br /><br />
-  
 
     <div id="footer-container"></div>
 
-    <script th:src="@{/js/formularioVenta.js}"></script>
+    <script th:src="@{/js/dinamic.js}"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
