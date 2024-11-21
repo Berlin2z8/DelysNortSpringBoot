@@ -1,5 +1,16 @@
 package com.marxchipana.DelysNortSpringBoot.controller;
 
+import com.itextpdf.barcodes.BarcodeQRCode;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.marxchipana.DelysNortSpringBoot.DAO.CarritoRepository;
 import com.marxchipana.DelysNortSpringBoot.DAO.ContactoRepository;
 import com.marxchipana.DelysNortSpringBoot.DAO.VentaRepository;
@@ -7,11 +18,13 @@ import com.marxchipana.DelysNortSpringBoot.models.*;
 import com.marxchipana.DelysNortSpringBoot.repository.RepositoryProducto;
 import com.marxchipana.DelysNortSpringBoot.repository.RepositoryRol;
 import com.marxchipana.DelysNortSpringBoot.services.UsuarioService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.Date;
@@ -158,7 +171,7 @@ public class UsuarioController {
         ventaRepository.save(venta);
         carritoRepository.deleteAll(); // Vaciar el carrito
 
-        return "redirect:/cliente"; // Redireccionar a la página del cliente
+        return "redirect:/generarBoleta";
     }
 
     private List<Carrito> carrito;
@@ -169,4 +182,86 @@ public class UsuarioController {
         return "redirect:/cliente";  // Redirigir a la página del cliente para actualizar la vista, lo puedes cambiar si quieres otro apartado solo para productos
     }
 
+    //ESto es para generar la boleta de cada compra
+    @GetMapping("/generarBoleta")
+    public void generarBoleta(HttpServletResponse response) throws IOException {
+        // Buscar la última venta registrada
+        Venta ultimaVenta = ventaRepository.findTopByOrderByIdDesc();
+        if (ultimaVenta == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "No se encontró ninguna venta.");
+            return;
+        }
+
+        // Configurar la respuesta HTTP para enviar el PDF
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "inline; filename=boleta.pdf");
+
+        // Crear el PDF
+        PdfWriter writer = new PdfWriter(response.getOutputStream());
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        // Agregar logo y nombre de la empresa
+        String logoPath = "classpath:static/images/delys/logodelysnort.jpg"; // Ruta dentro de 'resources'
+
+        Image logo = new Image(ImageDataFactory.create(logoPath)).scaleToFit(100, 100);
+        Table headerTable = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
+        headerTable.addCell(logo);
+        headerTable.addCell(new Paragraph("DelysNortSnack")
+                .setFontSize(18)
+                .setBold()
+                .setTextAlignment(TextAlignment.CENTER));
+        document.add(headerTable);
+
+        // Encabezado de la boleta
+        document.add(new Paragraph("Boleta de Venta")
+                .setBold()
+                .setFontSize(16)
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginBottom(10));
+
+        // Información de la venta
+        document.add(new Paragraph("Fecha: " + ultimaVenta.getFecha())
+                .setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Cliente: " + ultimaVenta.getNombre())
+                .setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Email: " + ultimaVenta.getEmail())
+                .setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Celular: " + ultimaVenta.getCelular())
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginBottom(10));
+
+        // Productos comprados
+        document.add(new Paragraph("Productos Comprados:").setBold().setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph(ultimaVenta.getNombresProductos())
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginBottom(10));
+
+        // Total
+        document.add(new Paragraph("Total: S/ " + ultimaVenta.getTotal())
+                .setBold()
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginBottom(10));
+
+        // Generar código QR como token único
+        // Generar código QR como token único
+        String token = "Venta-" + ultimaVenta.getId() + "-" + ultimaVenta.getFecha().getTime();
+        BarcodeQRCode qrCode = new BarcodeQRCode(token);
+        Image qrCodeImage = new Image(qrCode.createFormXObject(pdf))
+                .scaleToFit(100, 100)
+                .setHorizontalAlignment(HorizontalAlignment.CENTER); // Usar directamente la constante
+
+        // Agregar al documento
+        document.add(new Paragraph("Código QR:").setTextAlignment(TextAlignment.CENTER));
+        document.add(qrCodeImage);
+
+        // Nombre de la empresa al pie
+        document.add(new Paragraph("Gracias por su compra en DelysNortSnack")
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginTop(20));
+        document.add(new Paragraph("Visítanos pronto").setTextAlignment(TextAlignment.CENTER));
+
+        // Cerrar el documento
+        document.close();
+    }
 }

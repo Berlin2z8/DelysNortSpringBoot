@@ -182,6 +182,31 @@
       </form>
     </div>
 
+    <div id="modalTipoDocumento" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h2>¿Qué documento deseas generar?</h2>
+        <button id="btnBoleta">Boleta</button>
+        <button id="btnFactura">Factura</button>
+      </div>
+    </div>
+
+    <script>
+      // Mostrar el modal al completar la venta
+      function mostrarModal() {
+        document.getElementById('modalTipoDocumento').style.display = 'block';
+      }
+
+      // Redirigir a la generación de boleta
+      document.getElementById('btnBoleta').onclick = function () {
+        window.location.href = '/generarBoleta';
+      };
+
+      // Implementar generación de factura similar si es necesario
+      document.getElementById('btnFactura').onclick = function () {
+        alert('Funcionalidad de factura en desarrollo.');
+      };
+    </script>
+
     <script th:src="@{/js/guardarventa.js}"></script>
 
     <br /><br />
