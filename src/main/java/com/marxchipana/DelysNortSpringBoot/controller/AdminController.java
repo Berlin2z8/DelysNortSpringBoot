@@ -254,6 +254,23 @@ public class AdminController {
                 .body(new InputStreamResource(pdfStream));
     }
 
+    @Autowired
+    private ExcelGeneratorVentasService excelGeneratorVentasService;
+
+    @GetMapping("/admin/ventas/excel")
+    public ResponseEntity<InputStreamResource> downloadVentaReportExcel() {
+        List<Venta> ventas = ventaRepository.findAll();
+        ByteArrayInputStream excelStream = excelGeneratorVentasService.generateVentaReportExcel(ventas);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=ventas.xlsx");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(new InputStreamResource(excelStream));
+    }
+
     @GetMapping("/admin/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         // Lógica para cerrar sesión, el boton que hay en el nav
