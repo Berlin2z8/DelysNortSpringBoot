@@ -9,5 +9,4 @@ class DelysNortSpringBootApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-	//Prueba push al git
 }
