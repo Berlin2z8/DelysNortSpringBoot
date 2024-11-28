@@ -154,7 +154,9 @@ public class UsuarioController {
     @PostMapping("/guardar")
     public String guardarVenta(
             @ModelAttribute Venta venta,
-            Principal principal) {
+            @RequestParam("tipoDocumento") String tipoDocumento,
+            Principal principal,
+            HttpServletResponse response) throws IOException {
 
         if (principal == null) {
             return "redirect:/login";
@@ -171,8 +173,16 @@ public class UsuarioController {
         ventaRepository.save(venta);
         carritoRepository.deleteAll(); // Vaciar el carrito
 
-        return "redirect:/generarBoleta";
+        // Generar el documento según el tipo seleccionado
+        if ("boleta".equals(tipoDocumento)) {
+            response.sendRedirect("/generarBoleta?id=" + venta.getId());
+        } else if ("factura".equals(tipoDocumento)) {
+            response.sendRedirect("/generarFactura?id=" + venta.getId());
+        }
+
+        return null; // Evitar redirección adicional
     }
+
 
     private List<Carrito> carrito;
 
@@ -184,7 +194,7 @@ public class UsuarioController {
 
     //ESto es para generar la boleta de cada compra
     @GetMapping("/generarBoleta")
-    public void generarBoleta(HttpServletResponse response) throws IOException {
+    public void generarBoleta(@RequestParam("id") Integer ventaId, HttpServletResponse response) throws IOException {
         // Buscar la última venta registrada
         Venta ultimaVenta = ventaRepository.findTopByOrderByIdDesc();
         if (ultimaVenta == null) {
@@ -264,4 +274,79 @@ public class UsuarioController {
         // Cerrar el documento
         document.close();
     }
+
+    @GetMapping("/generarFactura")
+    public void generarFactura(
+            @RequestParam("id") Integer ventaId,
+            @RequestParam("ruc") String ruc,
+            @RequestParam("direccion") String direccion,
+            @RequestParam("razonSocial") String razonSocial,
+            HttpServletResponse response) throws IOException {
+
+        // Buscar la venta por ID
+        Venta ultimaVenta = ventaRepository.findTopByOrderByIdDesc();
+        if (ultimaVenta == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "No se encontró la venta.");
+            return;
+        }
+
+        // Configurar la respuesta HTTP para enviar el PDF
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "inline; filename=factura.pdf");
+
+        // Crear el PDF
+        PdfWriter writer = new PdfWriter(response.getOutputStream());
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        // Agregar logo y nombre de la empresa
+        String logoPath = "classpath:static/images/delys/logodelysnort.jpg";
+        Image logo = new Image(ImageDataFactory.create(logoPath)).scaleToFit(100, 100);
+        Table headerTable = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
+        headerTable.addCell(logo);
+        headerTable.addCell(new Paragraph("DelysNortSnack")
+                .setFontSize(18)
+                .setBold()
+                .setTextAlignment(TextAlignment.CENTER));
+        document.add(headerTable);
+
+        // Encabezado de la factura
+        document.add(new Paragraph("Factura de Venta")
+                .setBold()
+                .setFontSize(16)
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginBottom(10));
+
+        // Información del cliente
+        document.add(new Paragraph("RUC: " + ruc).setTextAlignment(TextAlignment.LEFT));
+        document.add(new Paragraph("Razón Social: " + razonSocial).setTextAlignment(TextAlignment.LEFT));
+        document.add(new Paragraph("Dirección: " + direccion).setTextAlignment(TextAlignment.LEFT).setMarginBottom(10));
+
+        // Información de la venta
+        document.add(new Paragraph("Número de Factura: " + ultimaVenta.getId()).setTextAlignment(TextAlignment.LEFT));
+        document.add(new Paragraph("Fecha: " + ultimaVenta.getFecha()).setTextAlignment(TextAlignment.LEFT));
+        document.add(new Paragraph("Cliente: " + ultimaVenta.getNombre()).setTextAlignment(TextAlignment.LEFT));
+        document.add(new Paragraph("Email: " + ultimaVenta.getEmail()).setTextAlignment(TextAlignment.LEFT));
+        document.add(new Paragraph("Celular: " + ultimaVenta.getCelular()).setTextAlignment(TextAlignment.LEFT).setMarginBottom(10));
+
+        // Detalle de productos
+        document.add(new Paragraph("Detalle de Productos:").setBold().setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph(ultimaVenta.getNombresProductos()).setTextAlignment(TextAlignment.LEFT).setMarginBottom(10));
+
+        // Total
+        document.add(new Paragraph("Total: S/ " + ultimaVenta.getTotal())
+                .setBold()
+                .setTextAlignment(TextAlignment.LEFT)
+                .setMarginBottom(10));
+
+        // Pie de página
+        document.add(new Paragraph("Gracias por su compra en DelysNortSnack")
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginTop(20));
+        document.add(new Paragraph("Visítanos pronto").setTextAlignment(TextAlignment.CENTER));
+
+        // Cerrar el documento
+        document.close();
+    }
+
 }

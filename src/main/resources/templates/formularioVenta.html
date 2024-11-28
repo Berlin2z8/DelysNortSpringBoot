@@ -45,167 +45,153 @@
         min-height: 80vh;
       "
     >
-      <form
-        th:action="@{/guardar}"
-        th:object="${venta}"
-        method="post"
-        onsubmit="return beforeSubmit();"
-        style="
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 15px;
-          padding: 30px;
-          box-shadow: 0 0 15px #00ffcc;
-          backdrop-filter: blur(10px);
-          width: 50%;
-          max-width: 600px;
-        "
-      >
-        <div style="margin-bottom: 20px">
-          <label style="color: #00ffcc">Nombre:</label>
-          <input
-            type="text"
-            th:value="${usuario.nombre}"
-            readonly
-            style="
-              border: 2px solid #00ffcc;
-              border-radius: 5px;
-              background: transparent;
-              color: #e0e0e0;
-              width: 100%;
-              padding: 10px;
-            "
-          /><br />
-        </div>
-
-        <div style="margin-bottom: 20px">
-          <label style="color: #00ffcc">Email:</label>
-          <input
-            type="email"
-            th:value="${usuario.email}"
-            readonly
-            style="
-              border: 2px solid #00ffcc;
-              border-radius: 5px;
-              background: transparent;
-              color: #e0e0e0;
-              width: 100%;
-              padding: 10px;
-            "
-          /><br />
-        </div>
-
-        <div style="margin-bottom: 20px">
-          <label style="color: #00ffcc">Número de Celular:</label>
-          <input
-            type="text"
-            th:field="*{celular}"
-            required
-            style="
-              border: 2px solid #00ffcc;
-              border-radius: 5px;
-              background: transparent;
-              color: #e0e0e0;
-              width: 100%;
-              padding: 10px;
-            "
-          /><br />
-        </div>
-
-        <h3 style="color: #32cd32">Productos a Comprar</h3>
-        <ul id="productos-list" style="list-style-type: none; padding: 0">
-          <li th:each="producto : ${productos}" style="margin-bottom: 15px">
-            <span th:text="${producto.nombre}" style="color: #ff6347"
-              >Nombre del Producto</span
-            >
-            -
-            <span
-              th:text="${producto.precio}"
-              data-precio="${producto.precio}"
-              style="color: #ff6347"
-              >Precio</span
-            >
-            <label style="color: #00ffcc">Cantidad:</label>
-            <input
-              type="number"
-              th:field="*{cantidad}"
-              required
-              min="1"
-              onchange="calcularTotal()"
-              style="
-                border: 2px solid #00ffcc;
-                border-radius: 5px;
-                background: transparent;
-                color: #e0e0e0;
-                width: 60px;
-                padding: 5px;
-                margin-left: 10px;
-              "
-            />
-            <input
-              type="hidden"
-              class="precio-producto"
-              th:value="${producto.precio}"
-            />
-            <!-- Campo oculto para el precio -->
-            <br />
-          </li>
-        </ul>
-
-        <h4 style="color: #ff4500">
-          Total: <span id="total" th:text="${venta.total}">0</span>
-        </h4>
-        <input type="hidden" id="totalHidden" th:field="*{total}" />
-        <!-- Hidden field for total -->
-        <input
-          type="hidden"
-          id="nombresProductosHidden"
-          th:field="*{nombresProductos}"
-        />
-        <!-- Hidden field for product names -->
-
-        <button
-          type="submit"
-          style="
-            background: linear-gradient(45deg, #00ffcc, #ff4500);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            cursor: pointer;
-            box-shadow: 0 0 10px #00ffcc;
-            transition: transform 0.3s;
-            margin-top: 20px;
-          "
+        <form
+                th:action="@{/guardar}"
+                th:object="${venta}"
+                method="post"
+                onsubmit="return beforeSubmit();"
+                class="p-4 rounded shadow"
+                style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); width: 50%; max-width: 600px;"
         >
-          Guardar Venta
-        </button>
-      </form>
+            <div class="mb-3">
+                <label class="form-label text-primary">Nombre:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        th:value="${usuario.nombre}"
+                        readonly
+                />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-primary">Email:</label>
+                <input
+                        type="email"
+                        class="form-control"
+                        th:value="${usuario.email}"
+                        readonly
+                />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-primary">Número de Celular:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        th:field="*{celular}"
+                        required
+                />
+            </div>
+
+            <h3 class="text-success">Productos a Comprar</h3>
+            <ul id="productos-list" class="list-unstyled">
+                <li th:each="producto : ${productos}" class="mb-3">
+                    <span th:text="${producto.nombre}" class="text-danger"></span> -
+                    <span th:text="${producto.precio}" class="text-danger" data-precio="${producto.precio}"></span>
+                    <label class="form-label text-primary ms-2">Cantidad:</label>
+                    <input
+                            type="number"
+                            class="form-control d-inline-block"
+                            style="width: 80px;"
+                            th:field="*{cantidad}"
+                            required
+                            min="1"
+                            onchange="calcularTotal()"
+                    />
+                    <input
+                            type="hidden"
+                            class="precio-producto"
+                            th:value="${producto.precio}"
+                    />
+                </li>
+            </ul>
+
+            <h4 class="text-danger">
+                Total: <span id="total" th:text="${venta.total}">0</span>
+            </h4>
+            <input type="hidden" id="totalHidden" th:field="*{total}" />
+            <input type="hidden" id="nombresProductosHidden" th:field="*{nombresProductos}" />
+
+            <button
+                    type="submit"
+                    class="btn btn-primary mt-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalTipoDocumento"
+            >
+                Guardar Venta
+            </button>
+        </form>
     </div>
 
-    <div id="modalTipoDocumento" class="modal" style="display: none;">
-      <div class="modal-content">
-        <h2>¿Qué documento deseas generar?</h2>
-        <button id="btnBoleta">Boleta</button>
-        <button id="btnFactura">Factura</button>
-      </div>
+    <!-- Modal para seleccionar tipo de documento -->
+    <div class="modal fade" id="modalTipoDocumento" tabindex="-1" aria-labelledby="modalTipoDocumentoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTipoDocumentoLabel">Selecciona el Tipo de Documento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <button class="btn btn-success w-100 mb-2" id="btnBoleta">Boleta</button>
+                    <button class="btn btn-warning w-100" id="btnFactura">Factura</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-      // Mostrar el modal al completar la venta
-      function mostrarModal() {
-        document.getElementById('modalTipoDocumento').style.display = 'block';
+    <!-- Modal para Factura -->
+    <div class="modal fade" id="modalFactura" tabindex="-1" aria-labelledby="modalFacturaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFacturaLabel">Información de Factura</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formFactura" method="GET" action="/generarFactura" target="_blank">
+                        <input type="hidden" name="id" value="123">
+                        <div class="mb-3">
+                            <label for="ruc" class="form-label">RUC:</label>
+                            <input type="text" class="form-control" id="ruc" name="ruc" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="razonSocial" class="form-label">Razón Social:</label>
+                            <input type="text" class="form-control" id="razonSocial" name="razonSocial" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Generar Factura</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/modalfactura.js}"></script>
+
+    <style>
+      .modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          justify-content: center;
+          align-items: center;
       }
 
-      // Redirigir a la generación de boleta
-      document.getElementById('btnBoleta').onclick = function () {
-        window.location.href = '/generarBoleta';
-      };
+      .modal-content {
+          background: #fff;
+          padding: 20px;
+          border-radius: 8px;
+      }
+    </style>
 
-      // Implementar generación de factura similar si es necesario
-      document.getElementById('btnFactura').onclick = function () {
-        alert('Funcionalidad de factura en desarrollo.');
-      };
-    </script>
+    <script th:src="@{/js/boletaventa.js}"></script>
+
 
     <script th:src="@{/js/guardarventa.js}"></script>
 
