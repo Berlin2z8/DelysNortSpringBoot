@@ -2,9 +2,12 @@ package com.marxchipana.DelysNortSpringBoot.controller;
 
 import com.itextpdf.barcodes.BarcodeQRCode;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
@@ -294,55 +297,68 @@ public class UsuarioController {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=factura.pdf");
 
-        // Crear el PDF
+        // Crear el PDF en orientación horizontal
         PdfWriter writer = new PdfWriter(response.getOutputStream());
         PdfDocument pdf = new PdfDocument(writer);
+        pdf.setDefaultPageSize(PageSize.A4.rotate());
         Document document = new Document(pdf);
 
-        // Agregar logo y nombre de la empresa
+        // Agregar logo y encabezado de la factura
         String logoPath = "classpath:static/images/delys/logodelysnort.jpg";
         Image logo = new Image(ImageDataFactory.create(logoPath)).scaleToFit(100, 100);
-        Table headerTable = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
-        headerTable.addCell(logo);
-        headerTable.addCell(new Paragraph("DelysNortSnack")
-                .setFontSize(18)
-                .setBold()
-                .setTextAlignment(TextAlignment.CENTER));
+
+        Table headerTable = new Table(UnitValue.createPercentArray(new float[]{1, 3})).useAllAvailableWidth();
+        headerTable.addCell(new Cell().add(logo).setBorder(Border.NO_BORDER));
+        headerTable.addCell(new Cell().add(new Paragraph("DelysNortSnack\nFactura de Venta")
+                        .setFontSize(16)
+                        .setBold()
+                        .setTextAlignment(TextAlignment.CENTER))
+                .setBorder(Border.NO_BORDER));
         document.add(headerTable);
 
-        // Encabezado de la factura
-        document.add(new Paragraph("Factura de Venta")
-                .setBold()
-                .setFontSize(16)
-                .setTextAlignment(TextAlignment.CENTER)
-                .setMarginBottom(10));
-
         // Información del cliente
-        document.add(new Paragraph("RUC: " + ruc).setTextAlignment(TextAlignment.LEFT));
-        document.add(new Paragraph("Razón Social: " + razonSocial).setTextAlignment(TextAlignment.LEFT));
-        document.add(new Paragraph("Dirección: " + direccion).setTextAlignment(TextAlignment.LEFT).setMarginBottom(10));
+        Table clientInfoTable = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
+        clientInfoTable.addCell(new Cell().add(new Paragraph("RUC: " + ruc)).setBorder(Border.NO_BORDER));
+        clientInfoTable.addCell(new Cell().add(new Paragraph("Razón Social: " + razonSocial)).setBorder(Border.NO_BORDER));
+        clientInfoTable.addCell(new Cell().add(new Paragraph("Dirección: " + direccion)).setBorder(Border.NO_BORDER));
+        clientInfoTable.addCell(new Cell().add(new Paragraph("Fecha: " + ultimaVenta.getFecha())).setBorder(Border.NO_BORDER));
+        document.add(clientInfoTable);
 
         // Información de la venta
-        document.add(new Paragraph("Número de Factura: " + ultimaVenta.getId()).setTextAlignment(TextAlignment.LEFT));
-        document.add(new Paragraph("Fecha: " + ultimaVenta.getFecha()).setTextAlignment(TextAlignment.LEFT));
-        document.add(new Paragraph("Cliente: " + ultimaVenta.getNombre()).setTextAlignment(TextAlignment.LEFT));
-        document.add(new Paragraph("Email: " + ultimaVenta.getEmail()).setTextAlignment(TextAlignment.LEFT));
-        document.add(new Paragraph("Celular: " + ultimaVenta.getCelular()).setTextAlignment(TextAlignment.LEFT).setMarginBottom(10));
+        Table saleInfoTable = new Table(UnitValue.createPercentArray(new float[]{1, 1, 1, 1})).useAllAvailableWidth();
+        saleInfoTable.addHeaderCell(new Cell().add(new Paragraph("Número de Factura")).setBold());
+        saleInfoTable.addHeaderCell(new Cell().add(new Paragraph("Cliente")).setBold());
+        saleInfoTable.addHeaderCell(new Cell().add(new Paragraph("Email")).setBold());
+        saleInfoTable.addHeaderCell(new Cell().add(new Paragraph("Celular")).setBold());
+
+        saleInfoTable.addCell(new Cell().add(new Paragraph(ultimaVenta.getId().toString())));
+        saleInfoTable.addCell(new Cell().add(new Paragraph(ultimaVenta.getNombre())));
+        saleInfoTable.addCell(new Cell().add(new Paragraph(ultimaVenta.getEmail())));
+        saleInfoTable.addCell(new Cell().add(new Paragraph(ultimaVenta.getCelular())));
+        document.add(saleInfoTable);
 
         // Detalle de productos
-        document.add(new Paragraph("Detalle de Productos:").setBold().setTextAlignment(TextAlignment.CENTER));
-        document.add(new Paragraph(ultimaVenta.getNombresProductos()).setTextAlignment(TextAlignment.LEFT).setMarginBottom(10));
+        document.add(new Paragraph("\nDetalle de Productos:").setBold().setFontSize(14));
+        Table productTable = new Table(UnitValue.createPercentArray(new float[]{4, 1})).useAllAvailableWidth();
+        productTable.addHeaderCell(new Cell().add(new Paragraph("Producto")).setBold());
+        productTable.addHeaderCell(new Cell().add(new Paragraph("Cantidad")).setBold());
+
+        // Detalle de productos en formato lista (simulación)
+        productTable.addCell(new Cell().add(new Paragraph(ultimaVenta.getNombresProductos())));
+        productTable.addCell(new Cell().add(new Paragraph("1"))); // Puedes modificar para cantidades dinámicas
+
+        document.add(productTable);
 
         // Total
-        document.add(new Paragraph("Total: S/ " + ultimaVenta.getTotal())
-                .setBold()
-                .setTextAlignment(TextAlignment.LEFT)
-                .setMarginBottom(10));
+        Table totalTable = new Table(UnitValue.createPercentArray(new float[]{1, 1})).useAllAvailableWidth();
+        totalTable.addCell(new Cell().add(new Paragraph("Total a Pagar:")).setBold());
+        totalTable.addCell(new Cell().add(new Paragraph("S/ " + ultimaVenta.getTotal())).setTextAlignment(TextAlignment.RIGHT));
+        document.add(totalTable);
 
         // Pie de página
-        document.add(new Paragraph("Gracias por su compra en DelysNortSnack")
+        document.add(new Paragraph("\nGracias por su compra en DelysNortSnack")
                 .setTextAlignment(TextAlignment.CENTER)
-                .setMarginTop(20));
+                .setFontSize(12));
         document.add(new Paragraph("Visítanos pronto").setTextAlignment(TextAlignment.CENTER));
 
         // Cerrar el documento
