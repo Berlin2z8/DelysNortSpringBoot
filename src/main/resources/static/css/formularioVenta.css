@@ -1,197 +1,246 @@
 /* Estilos generales */
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1f1f1f, #2d2d2d, #3d3d3d) !important;
+  background: #f5f5f5 !important;
   font-family: "Poppins", sans-serif !important;
-  color: #e0e0e0;
-}
-
-/* Estilos del formulario */
-.venta-form {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-radius: 12px !important;
-  padding: 3rem !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-  width: 75% !important;
-  max-width: 1000px !important;
-  margin: 2rem auto !important;
-  position: relative;
   color: #333;
 }
 
-.venta-form::before {
+/* Contenedor principal */
+.venta-form {
+  background: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 2.5rem !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+  width: 85% !important;
+  max-width: 900px !important;
+  margin: 2rem auto !important;
+  position: relative;
+}
+
+/* Pasos del formulario */
+.form-steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.step {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2rem;
+  position: relative;
+  font-weight: 600;
+  color: #666;
+}
+
+.step.active {
+  background: #4a90e2;
+  color: white;
+}
+
+.step::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #8e744b, #c5a572);
+  width: 100%;
+  height: 2px;
+  background: #f0f0f0;
+  right: -100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.step:last-child::after {
+  display: none;
 }
 
 /* Títulos */
 .dashboard-title {
-  font-size: 2.8rem;
-  color: #c5a572;
+  font-size: 2.2rem;
+  color: #2c3e50;
   margin-bottom: 1.5rem;
   font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  text-align: center;
 }
 
 .form-subtitle {
-  color: #8e744b;
-  font-size: 2rem;
+  color: #4a90e2;
+  font-size: 1.8rem;
   margin-bottom: 2rem;
   font-weight: 500;
+  text-align: center;
+}
+
+/* Secciones del formulario */
+.form-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #e0e0e0;
+}
+
+.section-title {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #4a90e2;
 }
 
 /* Campos del formulario */
 .form-control {
   background: #fff !important;
   border: 1px solid #ddd !important;
-  color: #333 !important;
-  border-radius: 6px !important;
-  padding: 12px 20px !important;
+  border-radius: 4px !important;
+  padding: 0.8rem 1rem !important;
   transition: all 0.3s ease !important;
   font-size: 1rem !important;
 }
 
 .form-control:focus {
-  border-color: #c5a572 !important;
-  box-shadow: 0 0 10px rgba(197, 165, 114, 0.2) !important;
+  border-color: #4a90e2 !important;
+  box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.1) !important;
 }
 
 .form-label {
-  color: #666 !important;
+  color: #4a4a4a !important;
   font-weight: 500 !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
   margin-bottom: 0.5rem !important;
 }
 
 /* Lista de productos */
 .productos-section {
   background: #f8f9fa;
-  border-radius: 8px;
-  padding: 2rem;
-  margin: 2rem 0;
-  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .producto-item {
   background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
+  padding: 1.2rem;
+  border-radius: 6px;
   margin-bottom: 1rem;
+  border: 1px solid #e0e0e0;
   transition: all 0.3s ease;
-  border: 1px solid #eee;
 }
 
 .producto-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border-color: #4a90e2;
 }
 
 /* Total */
 .total-section {
-  font-size: 1.8rem;
-  color: #8e744b;
-  margin: 2rem 0;
-  padding: 1.5rem;
-  border-top: 2px solid #eee;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
   font-weight: 600;
 }
 
 /* Botones */
 .btn-submit {
-  background: linear-gradient(45deg, #8e744b, #c5a572) !important;
+  background: #4a90e2 !important;
   border: none !important;
-  padding: 12px 35px !important;
-  border-radius: 6px !important;
+  padding: 0.8rem 2rem !important;
+  border-radius: 4px !important;
   font-weight: 500 !important;
-  letter-spacing: 1px !important;
-  text-transform: uppercase !important;
-  transition: all 0.3s ease !important;
+  letter-spacing: 0.5px !important;
   color: #fff !important;
-  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 .btn-submit:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 5px 15px rgba(142, 116, 75, 0.3) !important;
+  background: #357abd !important;
+  transform: translateY(-1px) !important;
 }
 
-/* Modal personalizado */
+.btn-nav {
+  background: #f0f0f0;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  color: #666;
+  transition: all 0.3s ease;
+  margin: 0 0.5rem;
+}
+
+.btn-nav:hover {
+  background: #e0e0e0;
+}
+
+/* Modal */
 .modal-content {
-  background: #fff !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   border: none !important;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
 }
 
 .modal-header {
-  border-bottom: 1px solid #eee !important;
-  padding: 1.5rem !important;
+  background: #f8f9fa !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  padding: 1.2rem 1.5rem !important;
 }
 
 .modal-title {
-  color: #8e744b !important;
+  color: #2c3e50 !important;
   font-weight: 600 !important;
-  font-size: 1.3rem !important;
 }
 
-.btn-modal {
-  width: 100% !important;
-  padding: 12px !important;
-  margin: 8px 0 !important;
-  border-radius: 6px !important;
-  font-weight: 500 !important;
-  transition: all 0.3s ease !important;
-  text-transform: uppercase !important;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.venta-form {
-  animation: fadeIn 0.8s ease-out;
-}
-
-/* Scrollbar personalizado */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c5a572;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #8e744b;
-}
-
-/* Validación de campos */
+/* Validación */
 .form-control.error {
   border-color: #dc3545 !important;
-  background-color: #fff8f8 !important;
 }
 
 .error-message {
   color: #dc3545;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   margin-top: 0.25rem;
+}
+
+/* Navegación entre pasos */
+.step-navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Animaciones suaves */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .venta-form {
+    width: 95% !important;
+    padding: 1.5rem !important;
+  }
+
+  .step {
+    margin: 0 1rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
 }
