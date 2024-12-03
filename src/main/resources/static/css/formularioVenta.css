@@ -325,3 +325,174 @@ body {
     gap: 0.8rem;
   }
 }
+
+/* Estilos para el Modal de Tipo de Documento */
+.modal-content {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  padding: 1.5rem 2rem !important;
+  background: linear-gradient(to right, #f8f9fa, #ffffff) !important;
+  border-radius: 15px 15px 0 0 !important;
+}
+
+.modal-title {
+  color: #2c3e50 !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.modal-body {
+  padding: 2rem !important;
+}
+
+/* Botones del modal */
+#btnBoleta,
+#btnFactura {
+  width: 100% !important;
+  padding: 1rem !important;
+  margin-bottom: 1rem !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+#btnBoleta {
+  background: linear-gradient(135deg, #4caf50, #45a049) !important;
+  color: white !important;
+}
+
+#btnFactura {
+  background: linear-gradient(135deg, #ffc107, #ffb300) !important;
+  color: #2c3e50 !important;
+}
+
+#btnBoleta:hover,
+#btnFactura:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+#btnBoleta:active,
+#btnFactura:active {
+  transform: translateY(1px) !important;
+}
+
+/* Iconos para los botones */
+#btnBoleta::before,
+#btnFactura::before {
+  font-family: "Bootstrap Icons";
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+#btnBoleta::before {
+  content: "\F4CA"; /* Icono de documento */
+}
+
+#btnFactura::before {
+  content: "\F4CB"; /* Icono de factura */
+}
+
+/* Animación del modal */
+.modal.fade .modal-dialog {
+  transform: scale(0.8);
+  transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1);
+}
+
+/* Estilos para el formulario dentro del modal de factura */
+.modal-content .form-label {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.modal-content .form-control {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 0.8rem 1rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.modal-content .form-control:focus {
+  border-color: #4a90e2 !important;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1) !important;
+}
+
+/* Botón cerrar del modal */
+.btn-close {
+  opacity: 0.5 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-close:hover {
+  opacity: 1 !important;
+  transform: rotate(90deg) !important;
+}
+
+/* Efectos hover adicionales */
+.modal-content .btn:hover {
+  transform: translateY(-2px) !important;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .modal-dialog {
+    margin: 1rem !important;
+  }
+
+  .modal-body {
+    padding: 1.5rem !important;
+  }
+
+  #btnBoleta,
+  #btnFactura {
+    padding: 0.8rem !important;
+  }
+}
+
+/* Animación para los campos del formulario */
+.modal-content .form-control {
+  transition: all 0.3s ease !important;
+}
+
+.modal-content .form-control:focus {
+  transform: translateY(-2px) !important;
+}
+
+/* Efecto de hover para los botones */
+.modal-content .btn {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.modal-content .btn::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  transition: width 0.6s ease, height 0.6s ease !important;
+}
+
+.modal-content .btn:active::after {
+  width: 300px !important;
+  height: 300px !important;
+}
