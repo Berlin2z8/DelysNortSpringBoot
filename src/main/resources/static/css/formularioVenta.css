@@ -244,3 +244,111 @@ body {
     font-size: 1.8rem;
   }
 }
+
+/* Contenedor principal de PayPal */
+#paypal-button-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Título para la sección de pagos */
+.payment-section-title {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+/* Contenedor de métodos de pago */
+.payment-methods {
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  margin-bottom: 1.5rem;
+}
+
+/* Estilo para el mensaje de resultado */
+#result-message {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* Estilo cuando hay un mensaje de éxito */
+#result-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Separador entre botones */
+.payment-divider {
+  text-align: center;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.payment-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e0e0e0;
+  z-index: 1;
+}
+
+.payment-divider span {
+  background: #fff;
+  padding: 0 1rem;
+  color: #6c757d;
+  position: relative;
+  z-index: 2;
+}
+
+/* Contenedor de información de seguridad */
+.payment-security-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.payment-security-info i {
+  color: #4a90e2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #paypal-button-container {
+    width: 95%;
+    padding: 1rem;
+  }
+}
+
+/* Animación para los botones */
+.paypal-button-transition {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.paypal-button-transition:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
