@@ -5,7 +5,10 @@
 }
 
 body {
-  background: url("https://i.pinimg.com/originals/49/73/ea/4973ead72580df908af111b6770fe6ac.jpg");
+  background-image: url("../images/productos/fondologin.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
