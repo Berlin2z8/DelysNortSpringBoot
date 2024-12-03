@@ -17,11 +17,15 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-      <!-- Initialize the JS-SDK -->
-      <script
-              src="https://www.paypal.com/sdk/js?client-id=AewCjIDEEGGrDDlPnrDxw0HHhVphtTbgi3N81YJnHzRSKzkad8Kv1oAcanIMBobqmgraC_nbuNKxsBr6&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo,paylater,card"
-              data-sdk-integration-source="developer-studio"
-      ></script>
+    <!-- Initialize the JS-SDK -->
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=AewCjIDEEGGrDDlPnrDxw0HHhVphtTbgi3N81YJnHzRSKzkad8Kv1oAcanIMBobqmgraC_nbuNKxsBr6&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo,paylater,card"
+      data-sdk-integration-source="developer-studio"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body
@@ -50,154 +54,222 @@
         min-height: 80vh;
       "
     >
-        <form
-                th:action="@{/guardar}"
-                th:object="${venta}"
-                method="post"
-                onsubmit="return beforeSubmit();"
-                class="p-4 rounded shadow"
-                style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); width: 50%; max-width: 600px;"
+      <form
+        th:action="@{/guardar}"
+        th:object="${venta}"
+        method="post"
+        onsubmit="return beforeSubmit();"
+        class="p-4 rounded shadow"
+        style="
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          width: 50%;
+          max-width: 600px;
+        "
+      >
+        <div class="mb-3">
+          <label class="form-label text-primary">Nombre:</label>
+          <input
+            type="text"
+            class="form-control"
+            th:value="${usuario.nombre}"
+            readonly
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-primary">Email:</label>
+          <input
+            type="email"
+            class="form-control"
+            th:value="${usuario.email}"
+            readonly
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-primary">Número de Celular:</label>
+          <input
+            type="text"
+            class="form-control"
+            th:field="*{celular}"
+            required
+          />
+        </div>
+
+        <h3 class="text-success">Productos a Comprar</h3>
+        <ul id="productos-list" class="list-unstyled">
+          <li th:each="producto : ${productos}" class="mb-3">
+            <span th:text="${producto.nombre}" class="text-danger"></span> -
+            <span
+              th:text="${producto.precio}"
+              class="text-danger"
+              data-precio="${producto.precio}"
+            ></span>
+            <label class="form-label text-primary ms-2">Cantidad:</label>
+            <input
+              type="number"
+              class="form-control d-inline-block"
+              style="width: 80px"
+              th:field="*{cantidad}"
+              required
+              min="1"
+              onchange="calcularTotal()"
+            />
+            <input
+              type="hidden"
+              class="precio-producto"
+              th:value="${producto.precio}"
+            />
+          </li>
+        </ul>
+
+        <h4 class="text-danger">
+          Total: <span id="total" th:text="${venta.total}">0</span>
+        </h4>
+        <input type="hidden" id="totalHidden" th:field="*{total}" />
+        <input
+          type="hidden"
+          id="nombresProductosHidden"
+          th:field="*{nombresProductos}"
+        />
+
+        <button
+          type="submit"
+          class="btn btn-primary mt-3"
+          data-bs-toggle="modal"
+          data-bs-target="#modalTipoDocumento"
         >
-            <div class="mb-3">
-                <label class="form-label text-primary">Nombre:</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        th:value="${usuario.nombre}"
-                        readonly
-                />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label text-primary">Email:</label>
-                <input
-                        type="email"
-                        class="form-control"
-                        th:value="${usuario.email}"
-                        readonly
-                />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label text-primary">Número de Celular:</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        th:field="*{celular}"
-                        required
-                />
-            </div>
-
-            <h3 class="text-success">Productos a Comprar</h3>
-            <ul id="productos-list" class="list-unstyled">
-                <li th:each="producto : ${productos}" class="mb-3">
-                    <span th:text="${producto.nombre}" class="text-danger"></span> -
-                    <span th:text="${producto.precio}" class="text-danger" data-precio="${producto.precio}"></span>
-                    <label class="form-label text-primary ms-2">Cantidad:</label>
-                    <input
-                            type="number"
-                            class="form-control d-inline-block"
-                            style="width: 80px;"
-                            th:field="*{cantidad}"
-                            required
-                            min="1"
-                            onchange="calcularTotal()"
-                    />
-                    <input
-                            type="hidden"
-                            class="precio-producto"
-                            th:value="${producto.precio}"
-                    />
-                </li>
-            </ul>
-
-            <h4 class="text-danger">
-                Total: <span id="total" th:text="${venta.total}">0</span>
-            </h4>
-            <input type="hidden" id="totalHidden" th:field="*{total}" />
-            <input type="hidden" id="nombresProductosHidden" th:field="*{nombresProductos}" />
-
-            <button
-                    type="submit"
-                    class="btn btn-primary mt-3"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalTipoDocumento"
-            >
-                Guardar Venta
-            </button>
-        </form>
+          Guardar Venta
+        </button>
+      </form>
     </div>
 
     <!-- Modal para seleccionar tipo de documento -->
-    <div class="modal fade" id="modalTipoDocumento" tabindex="-1" aria-labelledby="modalTipoDocumentoLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTipoDocumentoLabel">Selecciona el Tipo de Documento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <button class="btn btn-success w-100 mb-2" id="btnBoleta">Boleta</button>
-                    <button class="btn btn-warning w-100" id="btnFactura">Factura</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="modalTipoDocumento"
+      tabindex="-1"
+      aria-labelledby="modalTipoDocumentoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTipoDocumentoLabel">
+              Selecciona el Tipo de Documento
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <button class="btn btn-success w-100 mb-2" id="btnBoleta">
+              Boleta
+            </button>
+            <button class="btn btn-warning w-100" id="btnFactura">
+              Factura
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Modal para Factura -->
-    <div class="modal fade" id="modalFactura" tabindex="-1" aria-labelledby="modalFacturaLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalFacturaLabel">Información de Factura</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formFactura" method="GET" action="/generarFactura" target="_blank">
-                        <input type="hidden" name="id" value="123">
-                        <div class="mb-3">
-                            <label for="ruc" class="form-label">RUC:</label>
-                            <input type="text" class="form-control" id="ruc" name="ruc" required />
-                        </div>
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección:</label>
-                            <input type="text" class="form-control" id="direccion" name="direccion" required />
-                        </div>
-                        <div class="mb-3">
-                            <label for="razonSocial" class="form-label">Razón Social:</label>
-                            <input type="text" class="form-control" id="razonSocial" name="razonSocial" required />
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Generar Factura</button>
-                    </form>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="modalFactura"
+      tabindex="-1"
+      aria-labelledby="modalFacturaLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalFacturaLabel">
+              Información de Factura
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="formFactura"
+              method="GET"
+              action="/generarFactura"
+              target="_blank"
+            >
+              <input type="hidden" name="id" value="123" />
+              <div class="mb-3">
+                <label for="ruc" class="form-label">RUC:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="ruc"
+                  name="ruc"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="direccion"
+                  name="direccion"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="razonSocial" class="form-label"
+                  >Razón Social:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="razonSocial"
+                  name="razonSocial"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Generar Factura
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
     <script th:src="@{/js/modalfactura.js}"></script>
 
     <style>
       .modal {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          justify-content: center;
-          align-items: center;
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
       }
 
       .modal-content {
-          background: #fff;
-          padding: 20px;
-          border-radius: 8px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
       }
     </style>
 
-
     <script th:src="@{/js/boletaventa.js}"></script>
-
 
     <script th:src="@{/js/guardarventa.js}"></script>
 
@@ -211,6 +283,7 @@
     <div id="footer-container"></div>
 
     <script th:src="@{/js/dinamic.js}"></script>
+    <script th:src="@{/js/validacion.js}"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

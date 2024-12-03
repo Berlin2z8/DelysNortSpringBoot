@@ -31,35 +31,91 @@
 </div>
 
 
-<!-- Modal de carrito -->
+<!-- Modal de carrito con diseño mejorado -->
 <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+            <!-- Header con diseño premium -->
+            <div class="modal-header border-0" 
+                 style="background: linear-gradient(45deg, #2193b0, #6dd5ed); padding: 1.5rem;">
+                <h5 class="modal-title text-white fw-bold" id="carritoModalLabel" 
+                    style="font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="bi bi-cart3 me-2"></i>Tu Carrito
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <ul class="list-group" th:if="${carrito.size() > 0}">
-                    <li class="list-group-item" th:each="item : ${carrito}">
+            
+            <div class="modal-body p-4">
+                <ul class="list-group list-group-flush" th:if="${carrito.size() > 0}">
+                    <li class="list-group-item border-0 mb-3 p-3 position-relative" 
+                        th:each="item : ${carrito}" 
+                        style="background: #f8f9fa; border-radius: 15px; transition: all 0.3s ease;">
+                        
                         <div class="d-flex justify-content-between align-items-center">
-                            <span th:text="${item.producto.nombre}"></span>
-                            <span>Cantidad: <span th:text="${item.cantidad}"></span></span>
-                            <form th:action="@{/carrito/eliminar/{id}(id=${item.id})}" method="post"
-                                  th:object="${item}" onsubmit="return confirm('¿Seguro que quieres eliminar este producto?');">
+                            <div class="d-flex align-items-center">
+                                <div class="item-details">
+                                    <h6 class="mb-0 fw-bold" style="color: #2193b0;" th:text="${item.producto.nombre}"></h6>
+                                    <p class="mb-0 text-muted" style="font-size: 0.9rem;">
+                                        Cantidad: <span class="fw-bold" th:text="${item.cantidad}"></span>
+                                    </p>
+                                    <p class="mb-0" style="color: #2193b0; font-weight: 600;">
+                                        S/ <span th:text="${item.producto.precio}"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <form th:action="@{/carrito/eliminar/{id}(id=${item.id})}" method="post" 
+                                  th:object="${item}" class="ms-3"
+                                  onsubmit="return confirm('¿Seguro que quieres eliminar este producto?');">
                                 <input type="hidden" name="_method" value="delete" />
-                                <button type="submit" class="btn btn-danger btn-sm ms-2">Eliminar</button>
+                                <button type="submit" class="btn btn-danger btn-sm" 
+                                        style="border-radius: 50px; padding: 0.5rem 1rem; 
+                                               background: linear-gradient(45deg, #ff416c, #ff4b2b); 
+                                               border: none; box-shadow: 0 4px 15px rgba(255, 65, 108, 0.2);">
+                                    <i class="bi bi-trash me-1"></i>Eliminar
+                                </button>
                             </form>
                         </div>
-                        <p class="mb-1">Precio: S/ <span th:text="${item.producto.precio}"></span></p>
                     </li>
                 </ul>
-                <p th:if="${carrito.size() == 0}" class="text-center">No hay productos en el carrito.</p>
+                
+                <!-- Mensaje cuando el carrito está vacío -->
+                <div th:if="${carrito.size() == 0}" 
+                     class="text-center p-4" 
+                     style="background: #f8f9fa; border-radius: 15px;">
+                    <i class="bi bi-cart-x" style="font-size: 3rem; color: #2193b0;"></i>
+                    <p class="mt-3 mb-0" style="color: #666;">Tu carrito está vacío</p>
+                </div>
             </div>
-            <div class="modal-footer">
-                <h5>Total: S/ <span th:text="${totalCarrito}"></span></h5>
-                <a th:href="@{/formulario}" class="btn btn-primary">Comprar</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            
+            <!-- Footer con diseño premium -->
+            <div class="modal-footer border-0 bg-white p-4">
+                <div class="w-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0 fw-bold" style="color: #2193b0;">Total:</h5>
+                        <h5 class="mb-0 fw-bold" style="color: #2193b0;">
+                            S/ <span th:text="${totalCarrito}"></span>
+                        </h5>
+                    </div>
+                    
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" 
+                                data-bs-dismiss="modal" 
+                                style="border-radius: 50px; padding: 0.8rem 1.5rem; 
+                                       border: 2px solid #e0e0e0; font-weight: 500;">
+                            Cerrar
+                        </button>
+                        
+                        <a th:href="@{/formulario}" 
+                           class="btn btn-primary" 
+                           style="border-radius: 50px; padding: 0.8rem 1.5rem; 
+                                  background: linear-gradient(45deg, #2193b0, #6dd5ed); 
+                                  border: none; font-weight: 500; 
+                                  box-shadow: 0 4px 15px rgba(33, 147, 176, 0.3);">
+                            <i class="bi bi-cart-check me-2"></i>Comprar
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -70,19 +126,50 @@
 <h1 id="dashboard" class="text-center mt-5" th:text="'Bienvenido, ' + ${#authentication.name}"></h1>
 <!-- Sección de Productos -->
 <div id="productos" class="container productos">
-    <h2 class="text-center mb-4">Productos Disponibles</h2>
+    <h2 class="text-center mb-5">
+        <span class="productos-title">Productos Disponibles</span>
+    </h2>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         <th:block th:each="producto : ${productos}">
             <div class="col">
-                <div class="card h-100">
-                    <img th:src="@{${producto.imagen}}" class="card-img-top" alt="Producto">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${producto.nombre}"></h5>
-                        <p class="card-text" th:text="${producto.descripcion}"></p>
-                        <p class="card-text"><strong>Precio:</strong> S/ <span th:text="${producto.precio}"></span></p>
-                        <button type="button" class="btn btn-primary"
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img th:src="@{${producto.imagen}}" class="product-image" alt="Producto">
+                        <div class="product-overlay">
+                            <button type="button" class="btn btn-view"
+                                    data-bs-toggle="modal" th:data-bs-target="'#productoModal' + ${producto.id}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <h5 class="product-title" th:text="${producto.nombre}"></h5>
+                        <p class="product-description" th:text="${producto.descripcion}"></p>
+                        <div class="product-price">
+                            <span class="price-label">Precio:</span>
+                            <span class="price-amount">S/ <span th:text="${producto.precio}"></span></span>
+                        </div>
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <span class="rating-count">(4.5/5)</span>
+                            </div>
+                            <div class="review-preview">
+                                <p class="review-text">"¡Excelente producto! Superó mis expectativas."</p>
+                                <span class="reviewer-name">- María G.</span>
+                                <div class="review-badge">
+                                    <i class="bi bi-patch-check-fill"></i>
+                                    Compra verificada
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-shop"
                                 data-bs-toggle="modal" th:data-bs-target="'#productoModal' + ${producto.id}">
-                            Ver más
+                            Ver más <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
                 </div>
@@ -90,46 +177,102 @@
 
             <!-- Modal para mostrar detalles del producto -->
             <div th:id="'productoModal' + ${producto.id}" class="modal fade" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary text-white text-center w-100">
-                            <h5 class="modal-title" th:text="${producto.nombre}"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 500px;">
+                    <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden; background: #fafafa; max-height: 90vh;">
+                        <!-- Header con diseño mejorado -->
+                        <div class="modal-header border-0 position-relative py-3" 
+                             style="background: linear-gradient(45deg, #2193b0, #6dd5ed);">
+                            <h5 class="modal-title text-white fw-bold w-100 text-center" th:text="${producto.nombre}" 
+                                style="font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);"></h5>
+                            <button type="button" class="btn-close btn-close-white position-absolute" 
+                                    style="top: 15px; right: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body text-center">
-                            <!-- Imagen con estilo personalizado -->
-                            <img th:src="@{${producto.imagen}}" class="img-fluid mb-3" alt="Producto" style="max-width: 250px; border: 2px solid #ff5733; border-radius: 5px;">
-
-                            <p th:text="${producto.descripcion}"></p>
-                            <p><strong>Precio:</strong> S/ <span th:text="${producto.precio}"></span></p>
-
-                            <!-- Selector de cantidad estilizado y más compacto -->
-                            <div class="quantity-selector mb-3">
-                                <button class="btn btn-outline-secondary" id="decreaseBtn" style="padding: 0.2rem 0.4rem; font-size: 0.8rem;">-</button>
-                                <input type="number" class="form-control text-center" value="1" min="1" id="cantidadProducto" style="width: 40px; display: inline-block; padding: 0.2rem; font-size: 0.8rem;">
-                                <button class="btn btn-outline-secondary" id="increaseBtn" style="padding: 0.2rem 0.4rem; font-size: 0.8rem;">+</button>
+                        
+                        <div class="modal-body p-3">
+                            <!-- Contenedor de imagen con efectos -->
+                            <div class="position-relative mb-3 product-image-container text-center">
+                                <div class="image-wrapper" style="position: relative; display: inline-block;">
+                                    <img th:src="@{${producto.imagen}}" class="img-fluid rounded-3xl shadow-lg" alt="Producto" 
+                                         style="max-width: 250px; transition: all 0.4s ease;">
+                                    <div class="price-badge position-absolute" 
+                                         style="top: 10px; right: 10px; background: linear-gradient(45deg, #FF416C, #FF4B2B); 
+                                                color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold; 
+                                                font-size: 1rem; box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);">
+                                        S/ <span th:text="${producto.precio}"></span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Sección de reseñas -->
-                            <div class="reviews mt-4 text-center">
-                                <h6>Reseñas de Clientes</h6>
-                                <p>⭐⭐⭐⭐☆ (4.5/5)</p>
-                                <p>"Excelente producto, muy recomendado!" - Usuario</p>
-                                <!-- Más reseñas -->
+                            <!-- Descripción con diseño mejorado -->
+                            <div class="product-info bg-white p-3 rounded-3xl shadow-sm mb-3">
+                                <p class="description text-muted mb-0" style="font-size: 1rem; line-height: 1.5;" 
+                                   th:text="${producto.descripcion}"></p>
+                            </div>
+
+                            <!-- Selector de cantidad con diseño premium -->
+                            <div class="quantity-control d-flex justify-content-center align-items-center gap-2 mb-3">
+                                <button class="btn-quantity decrease" id="decreaseBtn" 
+                                        style="width: 40px; height: 40px; border-radius: 10px; border: none; 
+                                               background: linear-gradient(45deg, #2193b0, #6dd5ed); color: white; 
+                                               font-size: 1rem; box-shadow: 0 4px 15px rgba(33, 147, 176, 0.3);">
+                                    <i class="bi bi-dash-lg"></i>
+                                </button>
+                                <input type="number" class="form-control quantity-input text-center" 
+                                       value="1" min="1" id="cantidadProducto" 
+                                       style="width: 60px; height: 40px; border-radius: 10px; border: 2px solid #e0e0e0; 
+                                              font-size: 1rem; font-weight: bold;">
+                                <button class="btn-quantity increase" id="increaseBtn" 
+                                        style="width: 40px; height: 40px; border-radius: 10px; border: none; 
+                                               background: linear-gradient(45deg, #2193b0, #6dd5ed); color: white; 
+                                               font-size: 1rem; box-shadow: 0 4px 15px rgba(33, 147, 176, 0.3);">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </div>
+
+                            <!-- Sección de reseñas con diseño premium -->
+                            <div class="reviews-section p-3 rounded-3xl" 
+                                 style="background: linear-gradient(to right, #f8f9fa, #ffffff);">
+                                <h6 class="fw-bold mb-2" style="color: #2193b0; font-size: 0.9rem;">Valoraciones</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill" style="color: #ffd700; font-size: 1rem;"></i>
+                                    <i class="bi bi-star-fill" style="color: #ffd700; font-size: 1rem;"></i>
+                                    <i class="bi bi-star-fill" style="color: #ffd700; font-size: 1rem;"></i>
+                                    <i class="bi bi-star-fill" style="color: #ffd700; font-size: 1rem;"></i>
+                                    <i class="bi bi-star-half" style="color: #ffd700; font-size: 1rem;"></i>
+                                    <span class="ms-2" style="color: #666; font-weight: 500; font-size: 0.9rem;">(4.5/5)</span>
+                                </div>
+                                <div class="review-card p-2 rounded-3xl" 
+                                     style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                                    <p class="mb-0 fst-italic" style="color: #666; font-size: 0.9rem;">
+                                        "¡Producto excepcional! Superó mis expectativas" 
+                                        <span class="fw-bold" style="color: #2193b0;">- Cliente Verificado</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-center">
-                            <!-- Formulario para agregar al carrito -->
-                            <form th:action="@{/carrito/agregar/{id}(id=${producto.id})}" method="post">
-                                <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+
+                        <!-- Footer con botones premium -->
+                        <div class="modal-footer border-0 justify-content-center gap-2 p-3 bg-white">
+                            <form th:action="@{/carrito/agregar/{id}(id=${producto.id})}" method="post" class="d-inline">
+                                <button type="submit" class="btn action-button cart-button" 
+                                        style="padding: 8px 20px; border-radius: 50px; border: none;
+                                               background: linear-gradient(45deg, #2193b0, #6dd5ed); color: white;
+                                               font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;
+                                               box-shadow: 0 4px 15px rgba(33, 147, 176, 0.3);
+                                               transition: all 0.3s ease;">
+                                    <i class="bi bi-cart-plus me-1"></i>Agregar al Carrito
+                                </button>
                             </form>
-
-                            <!-- Botón para comprar directamente -->
-                            <a th:href="@{/formulario(productoId=${producto.id})}" class="btn btn-success">
-                                Comprar
+                            
+                            <a th:href="@{/formulario(productoId=${producto.id})}" 
+                               class="btn action-button buy-button" 
+                               style="padding: 8px 20px; border-radius: 50px; border: none;
+                                      background: linear-gradient(45deg, #11998e, #38ef7d); color: white;
+                                      font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;
+                                      box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+                                      transition: all 0.3s ease;">
+                                <i class="bi bi-bag-check me-1"></i>Comprar Ahora
                             </a>
-
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -220,22 +363,39 @@
         </div>
     </div>
 
-    <!-- Feed de Instagram -->
-    <div class="instagram-feed mt-5">
-        <h3 class="text-center mb-4">Últimas Publicaciones</h3>
-        <div class="row g-3">
-            <!-- Aquí puedes agregar imágenes de muestra o conectar con la API de Instagram -->
-            <div class="col-6 col-md-4 col-lg-2">
+    <!-- Feed de Instagram con diseño mejorado -->
+    <div class="instagram-feed container mt-5">
+        <div class="feed-header text-center mb-5">
+            <h3 class="feed-title">Últimas Publicaciones</h3>
+            <div class="title-decoration"></div>
+        </div>
+        <div class="row g-4">
+            <!-- Post 1 -->
+            <div class="col-12 col-md-4">
                 <div class="instagram-post">
-                    <!--th:src="@{/images/delys/post1.jpg}"-->
-                    <img src="../static/images/delys/logodelysnort.jpg" alt="Post Instagram" class="img-fluid">
-                    <div class="overlay">
-                        <span><i class="bi bi-heart-fill"></i> 1.2K</span>
-                        <span><i class="bi bi-chat-fill"></i> 24</span>
+                    <img th:src="@{/images/delys/post1.jpg}" alt="Post Instagram" class="post-image">
+                    <div class="post-overlay">
+                        <div class="post-actions">
+                            <button class="action-btn like-btn">
+                                <i class="bi bi-heart"></i>
+                                <span class="count">1.2K</span>
+                            </button>
+                            <button class="action-btn comment-btn">
+                                <i class="bi bi-chat"></i>
+                                <span class="count">24</span>
+                            </button>
+                            <button class="action-btn share-btn">
+                                <i class="bi bi-share"></i>
+                            </button>
+                        </div>
+                        <div class="post-info">
+                            <p class="post-caption">¡Descubre nuestros nuevos productos! 🌟</p>
+                            <span class="post-date">Hace 2 días</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Repite para más posts -->
+            <!-- Repite este bloque para más posts -->
         </div>
     </div>
 

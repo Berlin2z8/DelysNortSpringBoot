@@ -386,83 +386,174 @@ a.contact {
 }
 /* Estilos para la sección de productos */
 .productos {
-  padding: 4rem 0;
-  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-.productos h2 {
+.productos-title {
+  position: relative;
   color: #2c3e50;
   font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  position: relative;
+  font-weight: 700;
   padding-bottom: 15px;
 }
 
-.productos h2::after {
+.productos-title::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
+  width: 80px;
   height: 4px;
-  background: linear-gradient(to right, #ff6b6b, #ffd93d);
+  background: linear-gradient(90deg, #6f42c1, #8e44ad);
   border-radius: 2px;
 }
 
-.card {
-  border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 15px;
-  overflow: hidden;
+.product-card {
   background: white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 100%;
+  width: 100%;
+  max-width: 320px;
 }
 
-.card:hover {
+.product-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-.card-img-top {
-  height: 200px;
+.product-image-wrapper {
+  position: relative;
+  padding-top: 85%;
+  overflow: hidden;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
-.card:hover .card-img-top {
-  transform: scale(1.05);
+.product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(111, 66, 193, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.card-body {
-  padding: 1.5rem;
+.product-card:hover .product-overlay {
+  opacity: 1;
 }
 
-.card-title {
-  color: #2c3e50;
-  font-weight: 600;
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
+.product-card:hover .product-image {
+  transform: scale(1.1);
 }
 
-.card-text {
-  color: #666;
-  margin-bottom: 1rem;
-}
-
-.btn-primary {
-  background: linear-gradient(to right, #9bc219, #9a1234);
+.btn-view {
+  background: white;
+  color: #6f42c1;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
+  font-size: 1.2rem;
+  transform: translateY(20px);
   transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
-  background: linear-gradient(to right, #0b1919, #0fc357);
+.product-card:hover .btn-view {
+  transform: translateY(0);
+}
+
+.btn-view:hover {
+  background: #6f42c1;
+  color: white;
+}
+
+.product-details {
+  padding: 1.5rem;
+}
+
+.product-title {
+  color: #2c3e50;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.product-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.price-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.price-amount {
+  color: #6f42c1;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.btn-shop {
+  width: 100%;
+  background: linear-gradient(45deg, #6f42c1, #8e44ad);
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-shop:hover {
+  background: linear-gradient(45deg, #8e44ad, #6f42c1);
+  color: white;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .productos {
+    padding: 3rem 0;
+  }
+
+  .productos-title {
+    font-size: 2rem;
+  }
 }
 
 /* Estilos para el modal */
@@ -1124,5 +1215,243 @@ body::-webkit-scrollbar-thumb {
 @media only screen and (max-width: 375px) {
   .enlace2.vision {
     margin-left: -19px !important;
+  }
+}
+
+/* Estilos para las valoraciones */
+.product-rating {
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: 10px;
+}
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.rating-stars i {
+  color: #ffd700;
+  font-size: 14px;
+}
+
+.rating-count {
+  font-size: 0.8rem;
+  color: #666;
+  margin-left: 8px;
+}
+
+.review-preview {
+  background: linear-gradient(to right, #f8f9fa, #ffffff);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.review-text {
+  font-size: 0.85rem;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.reviewer-name {
+  font-size: 0.75rem;
+  color: #6f42c1;
+  font-weight: 600;
+}
+
+.review-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(111, 66, 193, 0.1);
+  color: #6f42c1;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  margin-top: 4px;
+}
+
+.review-badge i {
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+/* Animación suave para las estrellas */
+.rating-stars i {
+  transition: transform 0.2s ease;
+}
+
+.rating-stars:hover i {
+  transform: scale(1.2);
+}
+
+/* Efecto hover para la reseña */
+.review-preview {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos mejorados para el feed de Instagram */
+.instagram-feed {
+  padding: 2rem 0;
+  background: linear-gradient(to right, #f8f9fa, #ffffff);
+}
+
+.instagram-feed h3 {
+  color: #2c3e50;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.instagram-feed h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(45deg, #2193b0, #6dd5ed);
+  border-radius: 2px;
+}
+
+.instagram-post {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.instagram-post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.instagram-post img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1;
+  transition: transform 0.5s ease;
+}
+
+.instagram-post:hover img {
+  transform: scale(1.1);
+}
+
+.post-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 60%,
+    transparent 100%
+  );
+  padding: 1rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.instagram-post:hover .post-overlay {
+  opacity: 1;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.action-btn i {
+  font-size: 1.1rem;
+}
+
+.like-btn:hover {
+  color: #ff4b6e;
+}
+
+.comment-btn:hover {
+  color: #6dd5ed;
+}
+
+.share-btn:hover {
+  color: #96c93d;
+}
+
+.count {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.post-info {
+  color: white;
+}
+
+.post-caption {
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  opacity: 0.9;
+}
+
+.post-date {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Animación para los botones de acción */
+.action-btn i {
+  transition: transform 0.2s ease;
+}
+
+.action-btn:hover i {
+  transform: scale(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .instagram-post {
+    margin-bottom: 1rem;
+  }
+
+  .post-overlay {
+    opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.5) 70%,
+      transparent 100%
+    );
   }
 }

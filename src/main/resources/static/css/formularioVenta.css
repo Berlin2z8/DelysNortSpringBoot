@@ -1,47 +1,197 @@
-.card {
-    transition: transform 0.3s, box-shadow 0.3s;
+/* Estilos generales */
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f1f1f, #2d2d2d, #3d3d3d) !important;
+  font-family: "Poppins", sans-serif !important;
+  color: #e0e0e0;
 }
 
-.card:hover {
-    transform: scale(1.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+/* Estilos del formulario */
+.venta-form {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 12px !important;
+  padding: 3rem !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  width: 75% !important;
+  max-width: 1000px !important;
+  margin: 2rem auto !important;
+  position: relative;
+  color: #333;
 }
 
-.productos {
-    padding: 50px 0;
-}
-.footer-tipo {
-        background-color: rgb(139, 69, 19);
-        /* Marrón estilo carne a la parrilla */
-        width: 100%;
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-          rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
-          rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-        position: relative;
-        overflow: hidden;
-        color: white;
+.venta-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8e744b, #c5a572);
 }
 
-      .footer-tipo::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-          45deg,
-          rgba(0, 0, 0, 0.2),
-          rgba(0, 0, 0, 0.2) 10px,
-          transparent 10px,
-          transparent 20px
-        );
-        pointer-events: none;
-        z-index: 1;
-      }
+/* Títulos */
+.dashboard-title {
+  font-size: 2.8rem;
+  color: #c5a572;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
 
-      .footer-tipo .container {
-        position: relative;
-        z-index: 2;
-        /* Para asegurar que el contenido esté por encima del fondo con rayas */
-      }
+.form-subtitle {
+  color: #8e744b;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+/* Campos del formulario */
+.form-control {
+  background: #fff !important;
+  border: 1px solid #ddd !important;
+  color: #333 !important;
+  border-radius: 6px !important;
+  padding: 12px 20px !important;
+  transition: all 0.3s ease !important;
+  font-size: 1rem !important;
+}
+
+.form-control:focus {
+  border-color: #c5a572 !important;
+  box-shadow: 0 0 10px rgba(197, 165, 114, 0.2) !important;
+}
+
+.form-label {
+  color: #666 !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Lista de productos */
+.productos-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+  border: 1px solid #eee;
+}
+
+.producto-item {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.producto-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Total */
+.total-section {
+  font-size: 1.8rem;
+  color: #8e744b;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-top: 2px solid #eee;
+  font-weight: 600;
+}
+
+/* Botones */
+.btn-submit {
+  background: linear-gradient(45deg, #8e744b, #c5a572) !important;
+  border: none !important;
+  padding: 12px 35px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  transition: all 0.3s ease !important;
+  color: #fff !important;
+  font-size: 1rem !important;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 15px rgba(142, 116, 75, 0.3) !important;
+}
+
+/* Modal personalizado */
+.modal-content {
+  background: #fff !important;
+  border-radius: 12px !important;
+  border: none !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modal-header {
+  border-bottom: 1px solid #eee !important;
+  padding: 1.5rem !important;
+}
+
+.modal-title {
+  color: #8e744b !important;
+  font-weight: 600 !important;
+  font-size: 1.3rem !important;
+}
+
+.btn-modal {
+  width: 100% !important;
+  padding: 12px !important;
+  margin: 8px 0 !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.venta-form {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5a572;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8e744b;
+}
+
+/* Validación de campos */
+.form-control.error {
+  border-color: #dc3545 !important;
+  background-color: #fff8f8 !important;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
