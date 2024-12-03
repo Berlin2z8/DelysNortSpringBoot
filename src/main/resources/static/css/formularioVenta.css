@@ -6,349 +6,322 @@ body {
   color: #333;
 }
 
-/* Contenedor principal */
-.venta-form {
-  background: #ffffff !important;
-  border-radius: 8px !important;
-  padding: 2.5rem !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
-  width: 85% !important;
-  max-width: 900px !important;
-  margin: 2rem auto !important;
+/* Estilos para el encabezado y bienvenida */
+.welcome-section {
+  text-align: center;
+  padding: 3rem 0;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
   position: relative;
+  display: inline-block;
 }
 
-/* Pasos del formulario */
-.form-steps {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 3rem;
-}
-
-.step {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 2rem;
-  position: relative;
-  font-weight: 600;
-  color: #666;
-}
-
-.step.active {
-  background: #4a90e2;
-  color: white;
-}
-
-.step::after {
+.dashboard-title::after {
   content: "";
   position: absolute;
-  width: 100%;
-  height: 2px;
-  background: #f0f0f0;
-  right: -100%;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.step:last-child::after {
-  display: none;
-}
-
-/* Títulos */
-.dashboard-title {
-  font-size: 2.2rem;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-  text-align: center;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #4a90e2, #5ca9fb);
+  border-radius: 2px;
 }
 
 .form-subtitle {
-  color: #4a90e2;
   font-size: 1.8rem;
-  margin-bottom: 2rem;
+  color: #4a90e2;
+  margin: 2rem 0;
   font-weight: 500;
-  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Contenedor principal del formulario */
+.form-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.venta-form {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+  position: relative;
 }
 
 /* Secciones del formulario */
 .form-section {
-  background: #fff;
-  padding: 2rem;
+  background: #f8f9fa;
   border-radius: 8px;
+  padding: 2rem;
   margin-bottom: 2rem;
-  border: 1px solid #e0e0e0;
 }
 
-.section-title {
-  color: #2c3e50;
-  font-size: 1.4rem;
+.section-header {
   margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #4a90e2;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 1rem;
 }
 
 /* Campos del formulario */
-.form-control {
-  background: #fff !important;
-  border: 1px solid #ddd !important;
-  border-radius: 4px !important;
-  padding: 0.8rem 1rem !important;
-  transition: all 0.3s ease !important;
-  font-size: 1rem !important;
-}
-
-.form-control:focus {
-  border-color: #4a90e2 !important;
-  box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.1) !important;
+.form-group {
+  margin-bottom: 1.5rem;
 }
 
 .form-label {
-  color: #4a4a4a !important;
-  font-weight: 500 !important;
-  font-size: 0.95rem !important;
-  margin-bottom: 0.5rem !important;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #ffffff;
+}
+
+.form-control:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  outline: none;
+}
+
+/* Campos de solo lectura */
+.form-control[readonly] {
+  background-color: #f8f9fa;
+  border-color: #e9ecef;
+  cursor: not-allowed;
 }
 
 /* Lista de productos */
-.productos-section {
-  background: #f8f9fa;
-  border-radius: 6px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
+.productos-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .producto-item {
-  background: #fff;
-  padding: 1.2rem;
-  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
   margin-bottom: 1rem;
-  border: 1px solid #e0e0e0;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .producto-item:hover {
-  border-color: #4a90e2;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.producto-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.producto-nombre {
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.producto-precio {
+  color: #4a90e2;
+  font-weight: 600;
+}
+
+.cantidad-input {
+  width: 100px;
+  text-align: center;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  padding: 0.5rem;
 }
 
 /* Total */
 .total-section {
-  font-size: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  text-align: right;
+  border: 1px solid #e9ecef;
+}
+
+.total-label {
+  font-size: 1.2rem;
   color: #2c3e50;
-  margin: 1.5rem 0;
-  padding: 1rem;
-  border-top: 1px solid #e0e0e0;
-  text-align: center;
   font-weight: 600;
 }
 
-/* Botones */
+.total-amount {
+  font-size: 1.5rem;
+  color: #4a90e2;
+  font-weight: 700;
+  margin-left: 1rem;
+}
+
+/* Botón de guardar */
 .btn-submit {
-  background: #4a90e2 !important;
-  border: none !important;
-  padding: 0.8rem 2rem !important;
-  border-radius: 4px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.5px !important;
-  color: #fff !important;
-  transition: all 0.3s ease !important;
-  display: block !important;
-  margin: 0 auto !important;
+  background: linear-gradient(to right, #4a90e2, #5ca9fb);
+  color: #ffffff;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 .btn-submit:hover {
-  background: #357abd !important;
-  transform: translateY(-1px) !important;
-}
-
-.btn-nav {
-  background: #f0f0f0;
-  border: none;
-  padding: 0.6rem 1.5rem;
-  border-radius: 4px;
-  color: #666;
-  transition: all 0.3s ease;
-  margin: 0 0.5rem;
-}
-
-.btn-nav:hover {
-  background: #e0e0e0;
-}
-
-/* Modal */
-.modal-content {
-  border-radius: 8px !important;
-  border: none !important;
-}
-
-.modal-header {
-  background: #f8f9fa !important;
-  border-bottom: 1px solid #e0e0e0 !important;
-  padding: 1.2rem 1.5rem !important;
-}
-
-.modal-title {
-  color: #2c3e50 !important;
-  font-weight: 600 !important;
-}
-
-/* Validación */
-.form-control.error {
-  border-color: #dc3545 !important;
-}
-
-.error-message {
-  color: #dc3545;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-}
-
-/* Navegación entre pasos */
-.step-navigation {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e0e0e0;
-}
-
-/* Animaciones suaves */
-.fade-enter {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.fade-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.3s ease;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .venta-form {
-    width: 95% !important;
-    padding: 1.5rem !important;
-  }
-
-  .step {
-    margin: 0 1rem;
+  .welcome-section {
+    padding: 2rem 0;
   }
 
   .dashboard-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
+  }
+
+  .form-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .venta-form {
+    padding: 1.5rem;
+  }
+
+  .producto-item {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .producto-info {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
-/* Contenedor principal de PayPal */
-#paypal-button-container {
-  max-width: 500px;
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.venta-form {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Efectos de hover adicionales */
+.form-control:hover {
+  border-color: #4a90e2;
+}
+
+.btn-submit:active {
+  transform: translateY(1px);
+}
+
+/* Sección de Pagos */
+.payment-section {
+  text-align: center;
+  max-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
   background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-/* Título para la sección de pagos */
 .payment-section-title {
-  text-align: center;
   color: #2c3e50;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #f0f0f0;
-}
-
-/* Contenedor de métodos de pago */
-.payment-methods {
-  padding: 1rem;
-  border-radius: 8px;
-  background: #f8f9fa;
-  margin-bottom: 1.5rem;
-}
-
-/* Estilo para el mensaje de resultado */
-#result-message {
+  margin-bottom: 2rem;
   text-align: center;
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  color: #2c3e50;
 }
 
-/* Estilo cuando hay un mensaje de éxito */
-#result-message.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+#paypal-button-container {
+  margin: 1.5rem auto;
+  max-width: 500px;
 }
 
-/* Separador entre botones */
-.payment-divider {
-  text-align: center;
-  margin: 1rem 0;
-  position: relative;
-}
-
-.payment-divider::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #e0e0e0;
-  z-index: 1;
-}
-
-.payment-divider span {
-  background: #fff;
-  padding: 0 1rem;
-  color: #6c757d;
-  position: relative;
-  z-index: 2;
-}
-
-/* Contenedor de información de seguridad */
 .payment-security-info {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
   padding: 1rem;
   background: #f8f9fa;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  color: #6c757d;
+  border-radius: 8px;
 }
 
 .payment-security-info i {
   color: #4a90e2;
+  font-size: 1.2rem;
 }
 
-/* Responsive */
+.payment-security-info span {
+  color: #2c3e50;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+#result-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+#result-message.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Responsive para la sección de pagos */
 @media (max-width: 768px) {
-  #paypal-button-container {
+  .payment-section {
     width: 95%;
-    padding: 1rem;
+    padding: 1.5rem;
   }
-}
 
-/* Animación para los botones */
-.paypal-button-transition {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.paypal-button-transition:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  .payment-security-info {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 }
