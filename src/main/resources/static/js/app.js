@@ -1,29 +1,37 @@
 paypal.Buttons({
     style: {
         layout: 'vertical',
-        color:  'blue',
-        shape:  'rect',
-        label:  'paypal'
+        color: 'blue',
+        shape: 'rect',
+        label: 'paypal'
     },
-    
+
     createOrder: function(data, actions) {
+        // Obtener el total actual desde el DOM
+        const totalElement = document.getElementById('total');
+        const totalValue = totalElement ? parseFloat(totalElement.textContent) : 0;
+
+        // Crear la orden con el total dinámico
         return actions.order.create({
             purchase_units: [{
                 amount: {
-                    value: '100.00'
+                    value: totalValue.toFixed(2) // Asegurarse de tener dos decimales
                 }
             }]
         });
     },
 
     onApprove: function(data, actions) {
-        return actions.order.capture().then(function(orderData) {
-            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-            const transaction = orderData.purchase_units[0].payments.captures[0];
-            alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+        return actions.order.capture().then(function(details) {
+            alert('Pago completado por ' + details.payer.name.given_name + '!');
         });
+    },
+
+    onError: function(err) {
+        console.error('Error en el pago:', err);
     }
-}).render('#paypal-button-container');
+}).render('#paypal-button-container'); // Reemplaza con el ID del contenedor donde quieres mostrar el botón de PayPal
+
 
 // Configuración para Pay Later
 paypal.Buttons({
